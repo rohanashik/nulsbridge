@@ -32,11 +32,11 @@
                         //
                         // console.log("Connected to Bridge");
                         //
-                        console.log("Accounts - " + JSON.stringify(await bridge.getAccounts("getAccountsList")));
-                        var tokenbalance = await bridge.getTokenBalance(address, "tNULSeBaNBWvMJc6RxtwabsDux3mgPjEKtb3Lm");
-                        console.log("TokenBalance - " + tokenbalance.amount);
-                        var coinbalance = await bridge.getBalance(address);
-                        console.log("CoinBalance - " + coinbalance.totalBalance);
+                        // console.log("Accounts - " + JSON.stringify(await bridge.getAccounts("getAccountsList")));
+                        // var tokenbalance = await bridge.getTokenBalance(address, "tNULSeBaNBWvMJc6RxtwabsDux3mgPjEKtb3Lm");
+                        // console.log("TokenBalance - " + tokenbalance.amount);
+                        // var coinbalance = await bridge.getBalance(address);
+                        // console.log("CoinBalance - " + coinbalance.totalBalance);
                         //
                         //
                         var inputs = {
@@ -47,7 +47,15 @@
                             "sender":"tNULSeBaMhmHrnX4XJHbZxR4ypRun52s1uYnJB"
                         };
 
-                        console.log("Contract Write ---> "+JSON.stringify(await bridge.contractWrite(inputs)));
+                        // console.log("Contract Write ---> "+JSON.stringify(await bridge.contractWrite(inputs)));
+
+                        var callargs = {
+                            "contractAddress": "tNULSeBaN2TLFuecRgASzC7KdbfjhbGD9MthHQ",
+                            "methodName": "isIssued",
+                            "args": ["Rohan"]
+                        };
+
+                        console.log("Contract Call ---> "+JSON.stringify(await bridge.contractCall(callargs)));
                         //
                         // console.log("DeAuthorized ---> "+await bridge.disable());
 

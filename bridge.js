@@ -1,16 +1,5 @@
 class bridgeConnect {
 
-    clearData() {
-        return new Promise((resolve, reject) =>{
-            this.sendData("ClearData", "", function (responsedata) {
-                if (responsedata.type === "ClearData") {
-                    console.log("Data Cleared --> "+responsedata.status);
-                    resolve(responsedata.status);
-                }
-            });
-        });
-    }
-
     isConnected() {
         return new Promise((resolve, reject) =>{
             this.sendData("isConnected", "", function (responsedata) {
@@ -68,16 +57,6 @@ class bridgeConnect {
         })
     }
 
-    getAccounts(data) {
-        return new Promise((resolve, reject) => {
-            this.sendData(data, "", function (responsedata) {
-                if (responsedata.type === data) {
-                    // console.log(JSON.stringify(responsedata));
-                    resolve(responsedata);
-                }
-            })
-        })
-    }
 
     getBalance(address) {
         return new Promise((resolve, reject) => {
@@ -107,10 +86,10 @@ class bridgeConnect {
             this.sendData("contractWrite", inputs, function (responsedata) {
                 if (responsedata.type === "contractWrite") {
                     let result = { // Filtering out other values
-                        status: responsedata.status,
+                        success: responsedata.status,
                         result: responsedata.result
                     };
-                    console.log(JSON.stringify(responsedata));
+                    // console.log(JSON.stringify(responsedata));
                     resolve(result);
                 }
             })
@@ -118,12 +97,19 @@ class bridgeConnect {
 
     }
 
-    contractCall(){
-
-    }
-
-    transfer(){
-
+    contractCall(callargs){
+        return new Promise((resolve, reject) => {
+            this.sendData("contractCall", callargs, function (responsedata) {
+                if (responsedata.type === "contractCall") {
+                    let result = { // Filtering out other values
+                        success: responsedata.status,
+                        result: responsedata.result
+                    };
+                    // console.log(JSON.stringify(responsedata));
+                    resolve(result);
+                }
+            })
+        })
     }
 
 

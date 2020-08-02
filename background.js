@@ -63,10 +63,14 @@ function portConnected(port){
 				port.postMessage({type: "getBalance", data: output});
 			}else if(m.type === 'getTokenBalance'){
 				let output = await getTokenBalance(m.data.address, m.data.contract);
-				current_date = new Date();
-				cms = current_date.getMilliseconds();
-				console.log("sending.."+cms);
 				port.postMessage({type: m.type, data: output});
+			}else if(m.type === 'contractCall'){
+				if(hasAllProperties(m.data,["contractAddress", "methodName", "args"])) {
+					let output = await getInvokeContract(m.data.contractAddress, m.data.methodName, m.data.args);
+					port.postMessage({type: m.type, status: true, data: output});
+				}else{
+					port.postMessage({type: m.type, status: true, data: "Invalid Inputs"});
+				}
 			}else if(m.type === 'contractWrite'){
 				if(hasAllProperties(m.data,["contractAddress", "methodName", "value", "args", "sender"])) {
 					chrome.tabs.create({

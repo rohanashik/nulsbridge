@@ -19,12 +19,7 @@ window.addEventListener("message", function(e) {
 
 	var data = JSON.parse(JSON.stringify(e.data));
 
-	if (data.method && (data.method === "ClearData")) {
-		chrome.storage.local.set({'allowedsite': []});
-		chrome.storage.local.set({'invokable': {}});
-		e.source.postMessage({'type': 'ClearData', 'status': true}, e.origin);
-
-	}else if (data.method && (data.method === "Authorization")) {
+	if (data.method && (data.method === "Authorization")) {
 		chrome.storage.local.get('allowedsite', function(bucket) {
 			var isallowed = false;
 			if(bucket.allowedsite){
@@ -121,6 +116,7 @@ window.addEventListener("message", function(e) {
 		(data.method === "getBalance"
 			|| data.method === "getTokenBalance"
 			|| data.method === "contractWrite"
+			|| data.method === "contractCall"
 		)) {
 		port_bridge.postMessage({type: data.method, data: data.params, orgin: targetOrgin});
 	}
@@ -158,15 +154,16 @@ chrome.storage.onChanged.addListener(function(changes, namespace) {
 
 port_bridge.onMessage.addListener(function (m) {
 	// console.log("In content script, received message from background script: ");
-	current_date = new Date();
-	cms = current_date.getMilliseconds();
-
-	console.log("received at " + targetOrgin + " - " + cms + " -->" + JSON.stringify(m));
+	// current_date = new Date();
+	// cms = current_date.getMilliseconds();
+	// console.log("received at " + targetOrgin + " - " + cms + " -->" + JSON.stringify(m));
 	if (m.type === 'getBalance') {
 		window.postMessage({'type': 'getBalance', 'status': true, 'result': m.data}, targetOrgin);
 	} else if (m.type === 'getTokenBalance') {
 		window.postMessage({'type': 'getTokenBalance', 'status': true, 'result': m.data}, targetOrgin);
 	} else if (m.type === 'contractWrite') {
 		window.postMessage({'type': 'contractWrite', 'status': m.status, 'result': m.data}, targetOrgin);
+	} else if (m.type === 'contractCall') {
+		window.postMessage({'type': 'contractCall', 'status': m.status, 'result': m.data}, targetOrgin);
 	}
 });
