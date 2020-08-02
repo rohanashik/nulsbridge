@@ -1,0 +1,13 @@
+{
+  "appName": {
+    "message": "NULS Bridge",
+    "description": "The title of the application, displayed in the web store."
+  },
+  "appDesc": {
+    "message": "A Microservice Blockchain Platform",
+    "description":"The description of the application, displayed in the web store."
+  },
+  "currentBalance": {
+    "message": "Current Balance"
+  }
+}

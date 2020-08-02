@@ -1,0 +1,61 @@
+<!--
+  This is the popup  HTML file. It will appear whenever the user
+  presses the extension button.  It just a plain old web page!
+  But it can communicate with the background and content scripts
+-->
+
+<!DOCTYPE html>
+<html>
+<head>
+    <meta charset="UTF-8">
+    <title>NULS Bridge Management</title>
+    <script language="JavaScript" type="text/javascript" src="/library/jquery351.min.js"></script>
+
+    <script src="/library/nuls-sdk.js" type="text/javascript"></script>
+    <script src="/library/nuls-api.js" type="text/javascript"></script>
+    <script src="/activities/jsupport/management.js" type="text/javascript"></script>
+    <script src="/library/utils.js" type="text/javascript"></script>
+    <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@200;400&display=swap" rel="stylesheet">
+
+    <link rel="stylesheet" media="all" href="/css/base.css" type="text/css">
+    <link rel="stylesheet" media="all" href="/css/style.css" type="text/css">
+
+</head>
+<body>
+
+<div class="container">
+
+    <nav>
+        <a href="/activities/settings.html"><img src="/assets/backsmall.png" width="10px" class="mrgr10 pointer"/></a>
+        <span class="headbold">Wallets</span>
+        <div class="float-right">
+            <div class="dropdown" style="float:right;">
+            </div>
+        </div>
+    </nav>
+
+    <div class="settings_container">
+
+        <div id="wallet_list_container">
+
+        </div>
+
+        <a href="/activities/gettingstarted.html">
+            <div class="wallet_list">
+                <table width="100%" border="0">
+                    <tr>
+                        <td>
+                            <p>Create/Import Wallet</p>
+                        </td>
+                        <td class="align-right"><img src="/assets/add.png" width="12"></td>
+                    </tr>
+                </table>
+            </div>
+        </a>
+
+
+    </div>
+</div>
+
+</body>
+</html>

@@ -1,0 +1,91 @@
+<!--
+  This is the popup  HTML file. It will appear whenever the user
+  presses the extension button.  It just a plain old web page!
+  But it can communicate with the background and content scripts
+-->
+
+<!DOCTYPE html>
+<html>
+  <head>
+    <meta charset="UTF-8">
+    <title>NULS Bridge Transaction</title>
+    <script language="JavaScript" type="text/javascript" src="/library/jquery351.min.js"></script>
+
+    <script src="/library/bignumber.js" type="text/javascript"></script>
+    <script src="/library/buffer.js" type="text/javascript"></script>
+    <script src="/library/nuls-sdk.js" type="text/javascript"></script>
+    <script src="/library/nuls-api.js" type="text/javascript"></script>
+    <script src="jsupport/transaction.js" type="text/javascript"></script>
+    <script src="/library/utils.js" type="text/javascript"></script>
+  	<script src="/library/lottie.js" type="text/javascript"></script>
+	<link href="https://fonts.googleapis.com/css2?family=Poppins:wght@200;400&display=swap" rel="stylesheet">
+
+	<link rel="stylesheet" media="all" href="/css/base.css" type="text/css">
+	<link rel="stylesheet" media="all" href="/css/style.css" type="text/css">
+
+  </head>
+  <body>
+  
+  <div class="container">
+		
+	<div class="view_home" id="view_tx_home">
+		<div class="mainbody">
+			<img src="/assets/bridge.png" height="30px" id="nulslogo"/>
+			<p class="bighead mrgt30 mrgb15" id="permission_title">Transaction<br>Acknowledgment</p>
+			<p class="pheadl op7 mrgb30" id="invokedDomain">https://example.com</p>
+
+			<p class="phead mrgb5 mrgt30">Account Address</p>
+			<p class="account_address mrgt10" id="sender_address">NULSd6HgTwme2Q...</p>
+
+			<table width="100%" class="mrgt30 mrgb10" border="0">
+				<tr>
+					<td>
+						<p class="phead mrgb5">Method Name</p>
+						<p class="pmethod mrgt10" id="method_name"></p>
+					</td>
+					<td>
+						<p class="phead mrgb5">Transaction Fee</p>
+						<p class="pbigl mrgt10" id="tx_fee">Calculating...</p>
+					</td>
+				</tr>
+			</table>
+
+<!--			<p class="phead mrgb5 mrgt10">Transaction Data</p>-->
+<!--			<p class="tx_data mrgt10 mrgb10" id="tx_data">[1, "tNULSeBaMvw2QtYPhLjgCFuBQefpXDczAdd49C", "tNULSeBaMvw2QtYPhLjgCFuBQefpXDczAdd49C"]</p>-->
+
+
+			<input type="hidden" id="selectedAccount" value=""/>
+<!--			<input type="hidden" id="contractCall" value=""/>-->
+			<input type="password" class="mrgt15" id="tx_pass" placeholder="Enter Wallet Password"/>
+
+			<p id="auth_error" class="perror mrgb15 mrgt5 hide"><img src="/assets/false.png" width="12" class="mrgr10"><span id="auth_error_message">Password Incorrect!</span></p>
+			<div class="mrgt10">
+				<button class="greencurved mrgr3 closeview" style="background: #3b3b3b; width: 36.6%;" id="tx_cancel">CANCEL</button>
+				<button class="greencurved wdth60" id="tx_confirm"><span id="trns_txt">CONFIRM</span><img src="/assets/forward.png" class="btn_ico mrgl10" id="trns_ico" width="10px"></button>
+			</div>
+			<p class="pheadl mrgt15" style="font-size: 10px">Only allow sites you trust. Learn more</p>
+
+		</div>
+	</div>
+
+
+	  <div id="view_tx_success" class="hide">
+		  <center>
+			  <br>
+			  <p class="bighead mrgt30 mrgb15">Transaction<br>Successful</p>
+			  <lottie-player src="/assets/success.json"  background="transparent"  speed="1"  style="width: 150px; height: 150px;margin: 15px auto auto auto"    autoplay></lottie-player>
+			  <p class="phead mrgt20 mrgb10 underline pointer" id="openscan">Open Transaction Status<br>in Nulscan.io</p>
+			  <input type="hidden" id="txhash" value="">
+			  <!--				<button class="greencurved mrgt15 mrgb10 wdth60" id="transaction_result">SHOW TRANSACTION</button>-->
+			  <br>
+			  <button class="greencurved" style="background: #3b3b3b; width: 36.6%;" id="close_window">CLOSE</button>
+
+		  </center>
+	  </div>
+
+	  <input type="hidden" id="invokingDomain" value="">
+
+  </div>
+
+  </body>
+</html>

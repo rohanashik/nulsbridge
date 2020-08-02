@@ -1,0 +1,11 @@
+{
+  "appName": {
+    "message": "NULS桥"
+  },
+  "appDesc": {
+    "message": "微服务区块链平台"
+  },
+  "currentBalance": {
+    "message": "当前余额"
+  }
+}

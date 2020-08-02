@@ -1,0 +1,101 @@
+<!--
+  This is the popup  HTML file. It will appear whenever the user
+  presses the extension button.  It just a plain old web page!
+  But it can communicate with the background and content scripts
+-->
+
+<!DOCTYPE html>
+<html>
+  <head>
+    <meta charset="UTF-8">
+    <title>NULS Bridge</title>
+    <script language="JavaScript" type="text/javascript" src="/library/jquery351.min.js"></script>
+	  <script src="/library/buffer.js" type="text/javascript"></script>
+
+    <script src="/library/nuls-sdk.js" type="text/javascript"></script>
+    <script src="/library/nuls-api.js" type="text/javascript"></script>
+    <script src="jsupport/home.js" type="text/javascript"></script>
+    <script src="/library/utils.js" type="text/javascript"></script>
+	<link href="https://fonts.googleapis.com/css2?family=Poppins:wght@200;400&display=swap" rel="stylesheet">
+
+	<link rel="stylesheet" media="all" href="/css/base.css" type="text/css">
+	<link rel="stylesheet" media="all" href="/css/style.css" type="text/css">
+
+  </head>
+  <body>
+  
+  <div class="container">
+      
+	  <nav>
+		  <img src="/assets/bridge.png" height="30px" id="nulslogo"/>
+		  <div class="float-right">
+			  <div class="dropdown" style="float:right;">
+		  		<img src="/assets/accounts.png" width="30px" id="showAccounts" class="dropbtn pointer" />
+				  <div id="myDropdown" class="dropdown-content">
+				  </div>
+			  </div>
+		  </div>
+	  </nav>
+		
+		
+	<div class="view_home">
+		<div class="mainbody">
+			<p class="phead" data-localize="__MSG_currentBalance__">Current Balance</p>
+			<p class="coinbalance" id="coinbalance">0.000</p>
+			<div>
+				<span class="account_address mrgt20" id="crnt_acc_address">NULSd6HgTwme2Q...Hm5ju33ZCuc</span>
+				<input id="fulladdress" type="hidden" value="">
+
+				<div class="tooltip mrgb5">
+					<span class="tooltiptext" id="myTooltip">Copy Address</span>
+					<span class="account_address pointer" id="copyAddress"><img src="/assets/copy.png" class="copy_ico" width="7px">Copy</span>
+				</div>
+			</div>
+
+
+		</div>
+		<div class="wallet_action">
+			<button class="greencurved mrgr3 wdthbutton" id="buynuls"><img src="/assets/buy.png" class="btn_ico" width="10px"> BUY</button>
+			<a href="/activities/send.html"><button class="greencurved wdthbutton"><img src="/assets/send.png" class="btn_ico" width="10px"> SEND</button></a>
+		</div>
+
+		<div class="assets_view">
+
+			<p class="phead mrgb15"><span class="mrgr10 assetsview pointer" id="tokens">Contracts Assets </span> <span class="op5 assetsview pointer" id="crosschain"> Cross Chain Assets</span></p>
+			<div id="list_token">
+				<div id="loader_token">
+					<div class="covershim animate din mrgt12 mrgb15" style="height: 35px"></div>
+					<div class="covershim animate din mrgb15" style="height: 35px"></div>
+				</div>
+				<div id="tokenslist">
+
+				</div>
+			</div>
+			<div id="list_crosschain" class="hide">
+				<div id="loader_crosschain">
+					<div class="covershim animate din mrgt12 mrgb15" style="height: 35px"></div>
+					<!--					<div class="covershim animate din mrgb15" style="height: 35px"></div>-->
+				</div>
+				<div id="crosschainlist">
+
+				</div>
+			</div>
+		</div>
+
+		<div class="status_view mrgb15 hide">
+			<div class="status left mrgr5"></div><span class="left phead">Site Connected</span>
+		</div>
+
+	</div>
+	<div class="view_receive hide">
+		<p class="phead mrgb15">Scan QR and Send Nuls / Token</p>
+		<span class="account_address mrgt20" id="crnt_qr_address">NULSd6HgTwme2Q...Hm5ju33ZCuc</span>
+
+
+	</div>
+
+  </div>
+  <script src="jsupport/localize.js" type="text/javascript"></script>
+
+  </body>
+</html>

@@ -1,0 +1,108 @@
+<!--
+  This is the popup  HTML file. It will appear whenever the user
+  presses the extension button.  It just a plain old web page!
+  But it can communicate with the background and content scripts
+-->
+
+<!DOCTYPE html>
+<html>
+  <head>
+    <meta charset="UTF-8">
+    <title>Nuls Bridge</title>
+    <script language="JavaScript" type="text/javascript" src="/library/jquery351.min.js"></script>
+
+    <script src="/library/bignumber.js" type="text/javascript"></script>
+    <script src="/library/buffer.js" type="text/javascript"></script>
+    <script src="/library/serializers.js" type="text/javascript"></script>
+    <script src="/library/nuls-sdk.js" type="text/javascript"></script>
+    <script src="/library/nuls-api.js" type="text/javascript"></script>
+    <script src="jsupport/send.js" type="text/javascript"></script>
+    <script src="/library/utils.js" type="text/javascript"></script>
+    <script src="/library/lottie.js" type="text/javascript"></script>
+	<link href="https://fonts.googleapis.com/css2?family=Poppins:wght@200;400&display=swap" rel="stylesheet">
+
+	<link rel="stylesheet" media="all" href="/css/base.css" type="text/css">
+	<link rel="stylesheet" media="all" href="/css/style.css" type="text/css">
+
+  </head>
+  <body>
+  
+  <div class="container">
+      
+	<nav>
+	  <a href="/activities/home.html"><img src="/assets/bridge.png" height="30px" id="nulslogo"/></a>
+	  <div class="float-right hide">
+		  <div class="dropdown" style="float:right;">
+			<img src="/assets/accounts.png" width="30px" id="showAccounts" class="dropbtn pointer" />
+			  <div id="myDropdown" class="dropdown-content">
+			  </div>
+		  </div>
+	  </div>
+	</nav>
+		
+		
+	<div class="mainbody">
+		<div id="view_send_home" class="">
+			<p class="phead">Sender</p>
+			<p class="account_address mrgt10" id="sender_address">NULSd6HgTwme2Q...Hm5ju33ZCuc</p>
+
+			<p class="phead mrgt15">Receiver</p>
+			<input type="text" id="cryp_receiver" placeholder="Enter Receiver Address" value="tNULSeBaMoBx3H4Ea2RjsMkMCoFsTwrKUVFKH8"/>
+
+			<p class="phead mrgt5">Asset Type</p>
+			<select class="wdth100" id="assetlist">
+			</select>
+
+			<p class="phead mrgt5">Transfer Amount</p>
+			<input type="number" id="cryp_amount" placeholder="Enter transfer amount" value="1"/>
+
+			<input type="hidden" id="cryp_balance" value="0">
+			<input type="hidden" id="cryp_sender" value="0">
+
+			<p id="transfer_error" class="perror mrgt10 mrgb5 hide"><img src="/assets/false.png" width="12" class="mrgr10"><span id="transfer_error_message">Mismatch Password!</span></p>
+			<button class="greencurved wdth100 mrgt10" id="transaction_review">NEXT</button>
+			<p class="phead mrgt15 mrgb15">Balance: <span id="send_balance">Loading...</span></p>
+
+
+		</div>
+
+		<div id="view_send_review" class="hide">
+			<p class="phead">Sender</p>
+			<p class="phead mrgt7" id="rev_sender"></p>
+
+			<p class="phead mrgt15">Receiver</p>
+			<p class="phead mrgt7" id="rev_receiver"></p>
+
+			<p class="phead mrgt15">Amount</p>
+			<p class="pvalue mrgt7" id="rev_amount"></p>
+
+			<p class="phead mrgt15">Fees</p>
+			<p class="pvalue mrgt7 mrgb10" id="rev_fee">Calculating...</p>
+
+			<p class="phead mrgt15">Wallet Password</p>
+			<input type="password" id="send_pass" placeholder="Enter Wallet Password" value="123456789a"/>
+			<p id="send_error" class="perror mrgt5 mrgb15 hide"><img src="/assets/false.png" width="12" class="mrgr10"><span id="send_error_message">Mismatch Password!</span></p>
+			<div class="mrgt10 mrgb15">
+				<button class="greencurved mrgr3" style="background: #3b3b3b; width: 36.6%;" id="transaction_cancel">CANCEL</button>
+				<button class="greencurved wdth60" id="transaction_confirm"><img src="/assets/send.png" class="btn_ico mrgr10" id="trns_ico" width="10px"><span id="trns_txt">TRANSFER</span></button>
+			</div>
+		</div>
+
+		<div id="view_send_success" class="hide">
+			<center>
+				<lottie-player src="/assets/success.json"  background="transparent"  speed="1"  style="width: 150px; height: 150px;margin: 15px auto auto auto"    autoplay></lottie-player>
+				<p class="phead mrgt20 mrgb10 underline pointer" id="openscan">Open Transaction Status<br>in Nulscan.io</p>
+				<input type="hidden" id="txhash" value="">
+<!--				<button class="greencurved mrgt15 mrgb10 wdth60" id="transaction_result">SHOW TRANSACTION</button>-->
+				<br>
+				<button class="greencurved" style="background: #3b3b3b; width: 36.6%;" id="close_send">HOME</button>
+
+			</center>
+		</div>
+
+	</div>
+
+  </div>
+
+  </body>
+</html>

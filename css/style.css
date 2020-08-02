@@ -1,0 +1,302 @@
+nav{
+	padding:22px 22px 10px 22px;
+}
+
+.container{
+	width: 310px;
+	height: 450px;
+	background: #fdfdfd;
+	
+}
+.mainbody{
+	padding:22px 22px 10px 22px;
+}
+.centerbody{
+	display: flex;
+	align-items: center;
+	justify-content: center;
+	height: inherit;
+}
+.bighead{
+	font-size:19px;
+	font-family: 'gb';
+	font-weight:400;
+	color:#424242;
+}
+.phead{
+	font-size:10px;
+	font-family: 'Poppins', sans-serif;
+	font-weight:400;
+	color:#8A8A8A;
+}
+.pvalue{
+	font-size:12px;
+	font-family: 'Poppins', sans-serif;
+	font-weight:400;
+	color:#8A8A8A;
+}
+.pheadb{
+	font-size:12px;
+	font-family:  gb;
+	font-weight:400;
+	color:#3b3b3b;
+}
+.pheadl{
+	font-size:12px;
+	font-family:  gl;
+	font-weight:400;
+	color:#3b3b3b;
+}
+.pbigl{
+	font-size:16px;
+	font-family:  gl;
+	font-weight:400;
+	color:#3b3b3b;
+}
+
+.tx_data{
+	padding: 6px 10px;
+	border-radius: 3px;
+	font-size:8px;
+	color:#3b3b3b;
+	background: #cccccc;
+}
+
+.pmethod{
+	border: 1px SOLID #a0a0a0;
+	border-radius: 3px;
+	font-size:9px;
+	font-weight:400;
+	color:#3b3b3b;
+	padding: 3px 5px;
+	width: fit-content;
+}
+.account_address{
+	font-size:10px;
+	font-family: 'Poppins', sans-serif;
+	font-weight:400;
+	color:#8A8A8A;
+}
+
+.coinbalance{
+	font-size:26px;
+	margin:10px 0;
+    font-family: "gl";
+	font-weight:200;
+	color:#8A8A8A;
+}
+
+.copy_ico{
+	padding:0 5px 0 10px;
+}
+
+
+.btn_ico{
+	padding:0 5px 0 0px;
+}
+
+div.wallet_action{
+	padding:10px 20px 12px 20px;
+}
+
+
+button.greencurved{
+    /*border-radius: 5px;*/
+    border-radius: 30px;
+    color: #FFFFFF;
+    font-size: 12px;
+    font-family: "gb";
+    background: #7DB43D;
+	cursor:pointer;
+    text-align: center;
+    padding: 10px;
+    border:0;
+
+}
+button.greencurved:focus, button.greencurvedlight:focus {
+	outline: 0;
+}
+
+button.greencurvedlight{
+    /*border-radius: 5px;*/
+    border-radius: 30px;
+    color: #FFFFFF;
+    font-size: 11px;
+    font-family: "gl";
+    background: #7DB43D;
+	cursor:pointer;
+    text-align: center;
+    padding: 10px;
+    border:0;
+
+}
+
+
+
+div.assets_view{
+	min-height: 150px;
+	padding:12px 20px 5px 20px;
+}
+
+div.status_view{
+	padding:5px 20px 5px 20px;
+	/*display: table;*/
+}
+
+.status{
+	background: #7AAC40;
+	border-radius: 4px;
+	height: 8px;
+	width: 8px;
+	margin: 3px 10px 3px 3px;
+	/*border: 1px solid transparent;*/
+	display: flex;
+	align-items: center;
+	justify-content: center;
+}
+
+div.crosschain_view{
+	padding:12px 20px 10px 20px;
+}
+
+table.token_list{
+	/*border: 1px SOLID #7DB43D;*/
+	border-radius:20px;
+	font-size:10px;
+	font-family: 'Poppins', sans-serif;
+	font-weight:400;
+	color:#8A8A8A;
+	padding:0px 0px 0px 5px;
+	margin-bottom:15px;
+	box-shadow: 0 0px 1px 1px rgba(0, 0, 0, .20);
+}
+
+table.token_list:hover{
+	box-shadow: 0 0px 1px 1px #7DB43D;
+}
+
+
+select.getstart_select{
+	display:table;
+	font-family: 'Poppins', sans-serif;
+	font-weight:400;
+	padding: 10px 05px;
+	font-size:12px;
+	margin:20px;
+	border:0;
+	width: auto;
+	outline:none;
+	cursor: pointer;
+}
+
+select.bridge_select{
+	font-family: 'Poppins', sans-serif;
+	font-weight:400;
+	padding: 10px 0px;
+	font-size:12px;
+	margin:0px;
+	border:0;
+	width: auto;
+	outline:none;
+	cursor: pointer;
+}
+
+input, textarea, select{
+	border: 1px SOLID rgba(0, 0, 0, .20);
+	border-radius:3px;
+	font-size:10px;
+	font-family: 'Poppins', sans-serif;
+	font-weight:400;
+	color:#8A8A8A;
+	width:232px;
+	margin-top:10px;
+	margin-bottom:20px;
+	padding:10px 16px;
+	margin-bottom:10px;
+}
+
+input:focus, textarea:focus {
+	outline: none !important;
+	border:1px solid #7DB43D;
+	box-shadow: 0 0 1px #7DB43D;
+}
+
+
+.perror{
+	font-size: 11px;
+	color: #DB4437;
+}
+.psuccess{
+	font-size: 11px;
+	color: #48B862;
+}
+
+div.filedrop{
+	cursor: pointer;
+	border-radius: 10px;
+	border:2px dashed #a0a0a0;
+	padding: 20px 40px;
+	margin-right: 1px;
+}
+
+
+.settings_container{
+	padding:10px 0 0 0;
+}
+
+.settings_menu{
+	width: 88%;
+	display: table;
+	padding:15px 22px 15px 22px;
+}
+.subsettings{
+	padding:15px 22px 15px 22px;
+}
+.settings_menu p{
+	font-size: 10.5px;
+	color: #8A8A8A;
+	font-family: Poppins-Regular;
+	width: 95%;
+}
+p.settings_head{
+	font-size: 10.5px;
+	color: #8A8A8A;
+	font-family: Poppins-Regular;
+	width: 95%;
+}
+
+.settings_menu:hover{
+	cursor: pointer;
+	background: var(--my-one);
+}
+
+
+.nom_list{
+	font-size: 10.5px;
+	color: #8A8A8A;
+	margin: 10px 0px 27px 0px;
+	font-family: Poppins-Regular;
+}
+.wallet_list{
+	font-size: 10.5px;
+	color: #8A8A8A;
+	font-family: Poppins-Regular;
+	padding:15px 22px 15px 22px;
+	margin-bottom: 0px;
+}
+.wallet_list:hover{
+	cursor: pointer;
+	background: var(--my-one);
+}
+
+
+.editwallet_nav{
+	display: inline-block;
+	font-size: 10.5px;
+	color: #8A8A8A;
+	font-family: Poppins-Regular;
+}
+
+.edit_container{
+	padding:15px 22px 15px 22px;
+}

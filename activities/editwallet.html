@@ -1,0 +1,92 @@
+<!--
+  This is the popup  HTML file. It will appear whenever the user
+  presses the extension button.  It just a plain old web page!
+  But it can communicate with the background and content scripts
+-->
+
+<!DOCTYPE html>
+<html>
+<head>
+    <meta charset="UTF-8">
+    <title>Nuls Wallet</title>
+    <script language="JavaScript" type="text/javascript" src="/library/jquery351.min.js"></script>
+
+    <script src="/library/nuls-sdk.js" type="text/javascript"></script>
+    <script src="/library/nuls-api.js" type="text/javascript"></script>
+    <script src="jsupport/editwallet.js" type="text/javascript"></script>
+    <script src="/library/utils.js" type="text/javascript"></script>
+    <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@200;400&display=swap" rel="stylesheet">
+
+    <link rel="stylesheet" media="all" href="/css/base.css" type="text/css">
+    <link rel="stylesheet" media="all" href="/css/style.css" type="text/css">
+
+</head>
+<body>
+
+<div class="container">
+
+    <nav>
+        <a href="/activities/management.html"><img src="/assets/backsmall.png" width="10px" class="mrgr10 pointer"/></a>
+        <span class="headbold">Wallet</span>
+
+        <div class="float-right">
+            <div class="dropdown" style="float:right;">
+            </div>
+        </div>
+    </nav>
+
+    <div class="edit_container mrgt10">
+
+        <p class="phead mrgb5">Wallet Address</p>
+        <span class="account_address" id="crnt_acc_address">NULSd6HgTwme2Q...Hm5ju33ZCuc</span>
+
+        <br>
+        <br>
+        <div id="view_edwlt_home">
+            <p class="pheadb mrgb10">Account Backup</p>
+            <button class="greencurvedlight mrgt10 wdth100 wlt_edit" id="wlt_keystore">Backup keystore</button>
+            <button class="greencurvedlight mrgt10 wdth100 wlt_edit" id="wlt_prikey">Backup Private Key</button>
+
+            <p class="pheadb mrgb10 mrgt30">Wallet Management</p>
+            <button class="greencurvedlight mrgt10 wdth100" id="wlt_pass">Change Password</button>
+            <button class="greencurvedlight mrgt10 wdth100 wlt_edit" id="wlt_delete">Remove Wallet</button>
+
+        </div>
+        <div id="view_edwlt_auth" class="hide">
+            <p class="pheadb mrgb10" id="edit_auth_title">Account Backup</p>
+            <input type="password" id="edwlt_pass" placeholder="Enter Wallet Password"/>
+            <input type="hidden" id="manage_action" value="">
+            <p id="auth_error" class="perror mrgb15 mrgt5 hide"><img src="/assets/false.png" width="12" class="mrgr10"><span id="auth_error_message">Password Invalid!</span></p>
+            <div class="mrgt10">
+                <button class="greencurved mrgr3 closeview" style="background: #3b3b3b; width: 36.6%;" id="transaction_cancel">CANCEL</button>
+                <button class="greencurved wdth60" id="transaction_confirm"><span id="trns_txt">CONFIRM</span><img src="/assets/forward.png" class="btn_ico mrgl10" id="trns_ico" width="10px"></button>
+            </div>
+
+
+            <div id="view_privatekey" class="mrgt20 hide">
+                <p class="pheadb">Private Key</p>
+                <input type="text" id="edwlt_prikey" placeholder="Your Wallet Private Key"/>
+            </div>
+
+        </div>
+        <div id="view_edwlt_changepass" class="hide">
+            <p class="pheadb">Current Password</p>
+            <input type="password" id="change_current" placeholder="Enter Current Wallet Password"/>
+            <p class="pheadb mrgt10">New Password</p>
+            <input type="password" id="change_new" placeholder="Enter New Wallet Password"/>
+            <p class="pheadb mrgt10">Confirm New Password</p>
+            <input type="password" id="change_confirm" placeholder="Confirm New Wallet Password"/>
+            <p id="change_error" class="perror mrgb15 mrgt5 hide"><img src="/assets/false.png" width="12" class="mrgr10"><span id="chagne_error_message">Password Invalid!</span></p>
+            <p id="change_success" class="psuccess mrgb15 mrgt5 hide"><img src="/assets/true.png" width="12" class="mrgr10"><span id="chagne_success_message">Password Changed Successfully</span></p>
+
+            <div class="mrgt10 mrgb15">
+                <button class="greencurved mrgr3 closeview" style="background: #3b3b3b; width: 36.6%;" id="change_cancel">CANCEL</button>
+                <button class="greencurved wdth60" id="passchange_confirm"><img src="/assets/change.png" class="btn_ico mrgr10" width="10px"><span>CHANGE</span></button>
+            </div>
+
+        </div>
+    </div>
+</div>
+
+</body>
+</html>

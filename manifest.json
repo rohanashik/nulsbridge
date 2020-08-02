@@ -1,0 +1,47 @@
+{
+	"manifest_version": 2,
+	"name": "__MSG_appName__",
+	"description": "__MSG_appDesc__",
+	"default_locale": "en",
+	"version": "0.1",
+	"author": "Rohan Ashik",
+	"icons": {
+		"128": "/assets/nulslogo128.png",
+		"48": "/assets/nulslogo48.png",
+		"16": "/assets/nulslogo16.png"
+	},
+	"browser_action": {
+		"default_icon": "/assets/nulslogo.png",
+		"default_popup": "/activities/index.html",
+		"default_title": "NULS Bridge"
+	},
+	"commands": {
+		"_execute_browser_action": {
+			"suggested_key": {
+				"chromeos": "Alt+Shift+N",
+				"linux": "Alt+Shift+N",
+				"mac": "Alt+Shift+N",
+				"windows": "Alt+Shift+N"
+			}
+		}
+	},
+	"web_accessible_resources": [
+		"bridge.js"
+	],
+	"content_scripts":[
+		{
+			"matches":[
+				"<all_urls>"
+			],
+			"js": ["content.js"]
+		}
+	],
+	"background": {
+		"scripts": ["/library/bignumber.js", "/library/nuls-sdk.js", "/library/buffer.js", "/library/nuls-api.js", "background.js"],
+		"persistent": true
+	},
+	"permissions": [
+		"storage", "notifications", "tabs", "activeTab", "unlimitedStorage", "clipboardWrite",
+		"<all_urls>"
+	]
+}
