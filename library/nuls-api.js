@@ -139,6 +139,7 @@ async function sendTransaction(transfertype, assetsChainId, assettype, fromAddre
                 console.log("Insufficient balance");
                 return;
             }
+
         }
 
         // If the transferred asset is the main asset of the chain, the handling fee is directly added to the transferred amount
