@@ -14,16 +14,16 @@
 
                 async function myFunction() {
 
+                    console.log("Authorization ---> "+await bridge.enable());
                     if (typeof window.bridge !== 'undefined') {
                         console.log('Bridge is installed!');
 
                         // console.log(await bridge.clearData());
 
                         // console.log(await bridge.isConnected());
-                        if(!await bridge.isConnected()) {
-                            console.log("Invoking Connection to Bridge");
-                            console.log("Authorization ---> "+await bridge.enable());
-                        }
+                        // if(!await bridge.isConnected()) {
+                        //     console.log("Invoking Connection to Bridge");
+                        // }
 
                         var address = await bridge.getWalletAddress();
                         console.log("Default Account ---> "+ address);
@@ -42,12 +42,12 @@
                         var inputs = {
                             "contractAddress": "tNULSeBaN2TLFuecRgASzC7KdbfjhbGD9MthHQ",
                             "methodName": "issue",
-                            "args": ["nulsv2bkjridge"],
+                            "args": ["nulsv2bkjridasge"],
                             "value":0,
                             "sender":"tNULSeBaMhmHrnX4XJHbZxR4ypRun52s1uYnJB"
                         };
 
-                        // console.log("Contract Write ---> "+JSON.stringify(await bridge.contractWrite(inputs)));
+                        console.log("Contract Write ---> "+JSON.stringify(await bridge.contractWrite(inputs)));
 
                         var callargs = {
                             "contractAddress": "tNULSeBaN2TLFuecRgASzC7KdbfjhbGD9MthHQ",

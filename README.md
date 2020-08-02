@@ -1,3 +1,5 @@
+<p align="center"><a href="https://nuls.io" target="_blank" rel="noopener noreferrer"><img width="100" src="https://wallet.nuls.io/dist/img/logo.ef0bcec3.svg" alt="NULS logo"></a></p>
+
 <h1 align="center">Welcome to NULS Bridge Browser Plugin 👋</h1>
 <p>
   <img alt="Version" src="https://img.shields.io/badge/version-0.2 Beta-blue.svg?cacheSeconds=2592000" />
@@ -10,14 +12,14 @@
   <a href="https://github.com/rohanashik/nulsbridge/blob/master/LICENSE" target="_blank">
     <img alt="License: MIT" src="https://img.shields.io/badge/license-MIT-yellow.svg" />
   </a>
-  <a href="https://twitter.com/Rohanashik" target="_blank">
-    <img alt="Twitter: Rohanashik" src="https://img.shields.io/twitter/follow/Rohanashik.svg?style=social" />
+  <a href="https://twitter.com/Nuls" target="_blank">
+    <img alt="Twitter: Rohanashik" src="https://img.shields.io/twitter/follow/Nuls.svg?style=social" />
   </a>
 </p>
 
 > NULS Bridge is Browser extension that supports NULS Blockchain and this extension is for NULS enabled distributed application or Dapps in your browser! The Extension injects NULS API into every website's javascript context, so that dapps can read from the blockchain.
 
-### 🏠 [Homepage](https://github.com/rohanashik/nulsbridge)
+### 🏠 [Chrome Store](https://github.com/rohanashik/nulsbridge) &nbsp;&nbsp;  🏠 [Firefox Store](https://github.com/rohanashik/nulsbridge)
 
 
 ## Features
@@ -105,18 +107,19 @@ output = await bridge.contractCall(callargs);
 * Twitter: [@Rohanashik](https://twitter.com/Rohanashik)
 * GitHub: [@rohanashik](https://github.com/rohanashik)
 * LinkedIn: [@rohanashik](https://linkedin.com/in/rohanashik)
+* Telegram: [http://t.me/rohanashik](http://t.me/rohanashik)
 
 ## 🤝 Contributing
 
-Contributions, issues and feature requests are welcome!<br />Feel free to check [issues page](https://github.com/rohanashik/nulsbridge/issues). You can also take a look at the [contributing guide](https://github.com/rohanashik/nulsbridge/CONTRIBUTION.md).
+Contributions, issues and feature requests are welcome!<br />Feel free to check [issues page](https://github.com/rohanashik/nulsbridge/issues). You can also take a look at the [contributing guide](https://github.com/rohanashik/nulsbridge/blob/master/CONTRIBUTION.md).
 
 ## Show your support
 
 Give a ⭐ if this project helped you!
 
-<a href="https://www.patreon.com/rohanashik">
-  <img src="https://c5.patreon.com/external/logo/become_a_patron_button@2x.png" width="160">
-</a>
+NULS Wallet Address:
+NULSd6HgTwme2QGaSuJM75XpzfHm5ju33ZCuc
+
 
 ## 📝 License
 
