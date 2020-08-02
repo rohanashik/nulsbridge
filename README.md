@@ -1,4 +1,8 @@
-<p align="center"><a href="https://nuls.io" target="_blank" rel="noopener noreferrer"><img width="100" src="https://wallet.nuls.io/dist/img/logo.ef0bcec3.svg" alt="NULS logo"></a></p>
+
+<p align="center">
+  <a href="https://nuls.io" target="_blank" rel="noopener noreferrer"><img width="220" src="https://wallet.nuls.io/dist/img/logo.ef0bcec3.svg" alt="NULS logo"></a></p>
+<br>
+
 
 <h1 align="center">Welcome to NULS Bridge Browser Plugin 👋</h1>
 <p>
