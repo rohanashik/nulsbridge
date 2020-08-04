@@ -1,6 +1,13 @@
 
 $(function() {
 
+    // function getAcceptLanguages() {
+    //     chrome.i18n.getAcceptLanguages(function(languageList) {
+    //         var languages = languageList.join(",");
+    //         console.log(languages);
+    //         console.log(chrome.i18n.getUILanguage());
+    //     });
+    // }
 
     chrome.storage.local.get('current', function(bucket) {
         if(bucket.current) {
@@ -173,11 +180,11 @@ $(function() {
         navigator.clipboard.writeText(copyText)
             .then(() => {
                 var tooltip = document.getElementById("myTooltip");
-                tooltip.innerHTML = "Copied";
+                tooltip.innerHTML = "__MSG_copied__";
             })
             .catch(err => {
                 var tooltip = document.getElementById("myTooltip");
-                tooltip.innerHTML = "Permission Denied";
+                tooltip.innerHTML = "__MSG_permissionDenied__";
             });
     });
     $("#copyAddress").mouseout(function() {

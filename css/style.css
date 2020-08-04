@@ -140,7 +140,7 @@ div.assets_view{
 
 div.status_view{
 	padding:5px 20px 5px 20px;
-	/*display: table;*/
+	display: table;
 }
 
 .status{

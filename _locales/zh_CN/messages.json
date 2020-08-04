@@ -7,5 +7,155 @@
   },
   "currentBalance": {
     "message": "当前余额"
+  },
+  "copyAddress": {
+    "message": "复制地址"
+  },
+  "copy": {
+    "message": "复制"
+  },
+  "copied": {
+    "message": "复制的"
+  },
+  "permissionDenied": {
+    "message": "没有权限"
+  },
+  "buy": {
+    "message": "购买"
+  },
+  "send": {
+    "message": "发送"
+  },
+  "contractsAssets": {
+    "message": "合约资产"
+  },
+  "crossChainAssets": {
+    "message": "跨链资产"
+  },
+
+
+  "createNewAccount": {
+    "message": "建立新帐户"
+  },
+  "importPrivateKey": {
+    "message": "导入私钥"
+  },
+  "importKeyStore": {
+    "message": "导入密钥库"
+  },
+  "importKeyStore_Caps": {
+    "message": "导入密钥库"
+  },
+  "enterNewPassword": {
+    "message": "输入新密码"
+  },
+  "confirmNewPassword": {
+    "message": "确认新密码"
+  },
+  "enterYourPrivateKey": {
+    "message": "输入您的私钥"
+  },
+  "clickToUploadKeyStoreFile": {
+    "message": "单击以上传密钥库文件"
+  },
+  "importAccount": {
+    "message": "进口账户"
+  },
+  "importAccount_Caps": {
+    "message": "进口账户"
+  },
+  "create_Caps": {
+    "message": "进口账户"
+  },
+
+
+  "wallet": {
+    "message": "钱包"
+  },
+  "walletAddress": {
+    "message": "钱包地址"
+  },
+  "accountBackup": {
+    "message": "帐户备份"
+  },
+  "backupKeystore": {
+    "message": "备份密钥库"
+  },
+  "backupPrivateKey": {
+    "message": "备份私钥"
+  },
+  "walletManagement": {
+    "message": "钱包管理"
+  },
+  "changePassword": {
+    "message": "更改密码"
+  },
+  "removeWallet": {
+    "message": "删除钱包"
+  },
+  "cancel_Caps": {
+    "message": "取消"
+  },
+  "confirm_CAPS": {
+    "message": "确认"
+  },
+  "privateKey": {
+    "message": "私钥"
+  },
+  "currentPassword": {
+    "message": "当前密码"
+  },
+  "change_CAPS": {
+    "message": "更改"
+  },
+
+
+  "wallets": {
+    "message": "皮夹"
+  },
+  "createImportWallet": {
+    "message": "创建/导入钱包"
+  },
+
+
+  "sender": {
+    "message": "发件人"
+  },
+  "receiver": {
+    "message": "接收者"
+  },
+  "assetType": {
+    "message": "资产类型"
+  },
+  "transferAmount": {
+    "message": "转账金额"
+  },
+  "next_Caps": {
+    "message": "下一个"
+  },
+  "fee": {
+    "message": "费用"
+  },
+  "walletPassword": {
+    "message": "钱包密码"
+  },
+  "transfer_Caps": {
+    "message": "转让"
+  },
+  "home_Caps": {
+    "message": "家"
+  },
+  "siteConnections": {
+    "message": "站点连接"
+  },
+  "checkForUpdates": {
+    "message": "检查更新"
+  },
+  "sendFeedback": {
+    "message": "发送反馈"
+  },
+  "logoutAll": {
+    "message": "全部注销"
   }
+
 }

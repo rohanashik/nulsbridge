@@ -10,6 +10,7 @@
     <meta charset="UTF-8">
     <title>NULS Bridge</title>
 
+  	<script src="/library/buffer.js" type="text/javascript"></script>
   	<script src="/library/nuls-sdk.js" type="text/javascript"></script>
     <script language="JavaScript" type="text/javascript" src="/library/jquery351.min.js"></script>
 
@@ -37,36 +38,36 @@
 		<img src="/assets/nuls.png" height="100px" id="mainlogo"/>
 		
 		<select class="getstart_select" id="newaccounttype">
-			<option value="new_account">Create New Account</option>
-			<option value="private_key">Import Private Key</option>
-			<option value="keystore">Import Keystore</option>
+			<option value="new_account" data-localize="__MSG_createNewAccount__">Create New Account</option>
+			<option value="private_key" data-localize="__MSG_importPrivateKey__">Import Private Key</option>
+			<option value="keystore" data-localize="__MSG_importKeystore__">Import Keystore</option>
 		</select>
 		
 		</center>
 		
 		<div>
 			<div id="gs_view_createaccount" class="">
-				<p class="phead">Enter New Password</p>
+				<p class="phead" data-localize="__MSG_enterNewPassword__">Enter New Password</p>
 				<input type="password" id="createaccount_newpass" placeholder="Enter New Password"/>
 				
-				<p class="phead">Confirm New Password</p>
+				<p class="phead" data-localize="__MSG_confirmNewPassword__">Confirm New Password</p>
 				<input type="password" id="createaccount_confirmpass" placeholder="Confirm New Password"/>
 				<p id="createaccount_error" class="perror mrgb5 hide"><img src="/assets/false.png" width="12" class="mrgr10"><span id="createaccount_error_message">Mismatch Password!</span></p>
-				<button class="greencurved mrgt5" id="btn_createaccount" style="width:99.6%;">CONFIRM</button>
+				<button class="greencurved mrgt5" id="btn_createaccount" style="width:99.6%;" data-localize="__MSG_create_Caps__">CREATE</button>
 
 			</div>
 
 			<div id="gs_view_importpkey" class="hide">
-				<p class="phead">Enter Private Key</p>
+				<p class="phead" data-localize="__MSG_enterYourPrivateKey__">Enter Private Key</p>
 				<textarea placeholder="Enter Private Key" id="import_pri"></textarea>
 				
-				<p class="phead">Enter New Password</p>
+				<p class="phead" data-localize="__MSG_enterNewPassword__">Enter New Password</p>
 				<input type="password" placeholder="Enter New Password" id="import_newpass"/>
 				
-				<p class="phead">Confirm New Password</p>
+				<p class="phead" data-localize="__MSG_confirmNewPassword__">Confirm New Password</p>
 				<input type="password" placeholder="Confirm New Password" id="import_confirmpass"/>
 				<p id="import_error" class="perror mrgb5 hide"><img src="/assets/false.png" width="12" class="mrgr10"><span id="import_error_message">Private Key Invalid!</span></p>
-				<button class="greencurved wdth100 mrgt5" id="btn_privatekey">IMPORT ACCOUNT</button>
+				<button class="greencurved wdth100 mrgt5" id="btn_privatekey" data-localize="__MSG_importAccount_Caps__">IMPORT ACCOUNT</button>
 
 			</div>
 			<div id="gs_view_keystore" class="hide">
@@ -74,13 +75,13 @@
 				<div class="filedrop" id="upload_keystore">
 					<center>
 						<img src="/assets/fileupload.png" height="70px" id="keystore_done"/>
-						<p class="phead mrgt10">Drag file or Click to Upload</p>
+						<p class="phead mrgt10" data-localize="__MSG_clickToUploadKeyStoreFile__">Click to Upload KeyStore File</p>
 					</center>
 				</div>
 				<div id="keystore_pass_view" class="hide">
 				<input type="password" class="mrgt20" placeholder="Enter keystore Password" id="keystore_pass"/>
 				<p id="keystore_error" class="perror mrgb5 hide"><img src="/assets/false.png" width="12" class="mrgr10"><span id="keystore_error_message">Incorrect Password!</span></p>
-				<button class="greencurved wdth100 mrgt5" id="btn_keystore">IMPORT KEYTORE</button>
+				<button class="greencurved wdth100 mrgt5" id="btn_keystore" data-localize="__MSG_importKeyStore_Caps__">IMPORT KEYSTORE</button>
 				</div>
 
 
@@ -95,6 +96,7 @@
 	  
 
   </div>
-  
+  <script src="jsupport/localize.js" type="text/javascript"></script>
+
   </body>
 </html>

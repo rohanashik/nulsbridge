@@ -9,5 +9,156 @@
   },
   "currentBalance": {
     "message": "Current Balance"
+  },
+  "copyAddress": {
+    "message": "Copy Address"
+  },
+  "copy": {
+    "message": "Copy"
+  },
+  "copied": {
+    "message": "Copied"
+  },
+  "permissionDenied": {
+    "message": "Permission Denied"
+  },
+  "buy": {
+    "message": "BUY"
+  },
+  "send": {
+    "message": "SEND"
+  },
+  "contractsAssets": {
+    "message": "Contract's Assets"
+  },
+  "crossChainAssets": {
+    "message": "Cross Chain Assets"
+  },
+
+
+  "createNewAccount": {
+    "message": "Create New Account"
+  },
+  "importPrivateKey": {
+    "message": "Import Private Key"
+  },
+  "importKeyStore": {
+    "message": "Import Keystore"
+  },
+  "importKeyStore_Caps": {
+    "message": "IMPORT KEYSTORE"
+  },
+  "enterNewPassword": {
+    "message": "Enter New Password"
+  },
+  "confirmNewPassword": {
+    "message": "Confirm New Password"
+  },
+  "enterYourPrivateKey": {
+    "message": "Enter Your Private Key"
+  },
+  "clickToUploadKeyStoreFile": {
+    "message": "Click to Upload Keystore File"
+  },
+  "importAccount": {
+    "message": "Import Account"
+  },
+  "importAccount_Caps": {
+    "message": "IMPORT ACCOUNT"
+  },
+  "create_Caps": {
+    "message": "CREATE"
+  },
+
+
+  "wallet": {
+    "message": "Wallet"
+  },
+  "walletAddress": {
+    "message": "Wallet Address"
+  },
+  "accountBackup": {
+    "message": "Account Backup"
+  },
+  "backupKeystore": {
+    "message": "Backup keystore"
+  },
+  "backupPrivateKey": {
+    "message": "Backup Private Key"
+  },
+  "walletManagement": {
+    "message": "Wallet Management"
+  },
+  "changePassword": {
+    "message": "Change Password"
+  },
+  "removeWallet": {
+    "message": "Remove Wallet"
+  },
+  "cancel_Caps": {
+    "message": "CANCEL"
+  },
+  "confirm_CAPS": {
+    "message": "CONFIRM"
+  },
+  "privateKey": {
+    "message": "Private Key"
+  },
+  "currentPassword": {
+    "message": "Current Password"
+  },
+  "change_CAPS": {
+    "message": "CHANGE"
+  },
+
+
+  "wallets": {
+    "message": "Wallets"
+  },
+  "createImportWallet": {
+    "message": "Create/Import Wallet"
+  },
+
+
+  "sender": {
+    "message": "Sender"
+  },
+  "receiver": {
+    "message": "Receiver"
+  },
+  "assetType": {
+    "message": "Asset Type"
+  },
+  "transferAmount": {
+    "message": "Transfer Amount"
+  },
+  "next_Caps": {
+    "message": "NEXT"
+  },
+  "fee": {
+    "message": "fee"
+  },
+  "walletPassword": {
+    "message": "Wallet Password"
+  },
+  "transfer_Caps": {
+    "message": "TRANSFER"
+  },
+  "home_Caps": {
+    "message": "HOME"
+  },
+  "siteConnections": {
+    "message": "Site Connections"
+  },
+  "checkForUpdates": {
+    "message": "Check For Updates"
+  },
+  "sendFeedback": {
+    "message": "Send Feedback"
+  },
+  "logoutAll": {
+    "message": "Logout All"
   }
+
+
 }

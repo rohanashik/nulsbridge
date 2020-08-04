@@ -1,7 +1,7 @@
 <p align="center"><a href="https://nuls.io" target="_blank" rel="noopener noreferrer"><img width="100" src="https://wallet.nuls.io/dist/img/logo.ef0bcec3.svg" alt="NULS logo"></a></p>
 
 <h1 align="center">Welcome to NULS Bridge Browser Plugin 👋</h1>
-<p>
+<p align="center">
   <img alt="Version" src="https://img.shields.io/badge/version-0.2 Beta-blue.svg?cacheSeconds=2592000" />
   <a href="https://github.com/rohanashik/nulsbridge#readme" target="_blank">
     <img alt="Documentation" src="https://img.shields.io/badge/documentation-yes-brightgreen.svg" />
@@ -17,18 +17,26 @@
   </a>
 </p>
 
-> NULS Bridge is Browser extension that supports NULS Blockchain and this extension is for NULS enabled distributed application or Dapps in your browser! The Extension injects NULS API into every website's javascript context, so that dapps can read from the blockchain.
+> <p align="center">NULS Bridge is Browser extension that supports NULS Blockchain and this extension is for NULS enabled distributed application or Dapps in your browser! The Extension injects NULS API into every website's javascript context, so that dapps can read from the blockchain.</p>
 
 ### 🏠 [Chrome Store](https://github.com/rohanashik/nulsbridge) &nbsp;&nbsp;  🏠 [Firefox Store](https://github.com/rohanashik/nulsbridge)
 
 
-## Features
+
+### Features
 
 - Account Management
 - Wallet Docking with Web Dapp Applications
 
 
-## To Check if Bridge is Installed
+### Installation
+
+- Get the Chrome Extension
+- Get the Firefox Addon
+
+
+
+### To Check if Bridge is Installed
 
 ```javascript
 if (typeof window.bridge !== 'undefined') {
@@ -36,24 +44,24 @@ if (typeof window.bridge !== 'undefined') {
 }
 ```
 
-## Invoke Bridge Permission 
+### Invoke Bridge Permission 
 
 ```javascript
 await bridge.enable();
 ```
 
-## Get Connected Wallet Address
+### Get Connected Wallet Address
 
 ```javascript
 await bridge.getWalletAddress();
 ```
 
-## Switch Wallet Address
+### Switch Wallet Address
 
 ```javascript
 await bridge.switchAccount();
 ```
-## To Get Wallet Balance
+### To Get Wallet Balance
 
 ```javascript
 let address = await bridge.getWalletAddress();
@@ -61,14 +69,14 @@ await bridge.getBalance(address);
 ```
 
 
-## To Get Wallet Token Balance
+### To Get Wallet Token Balance
 
 ```javascript
 let address = await bridge.getWalletAddress();
 await bridge.getTokenBalance(address, "tNULSeBaNBWvMJc6RxtwabsDux3mgPjEKtb3Lm");
 ```
 
-## Write Contract Data into Blockchain
+### Write Contract Data into Blockchain
 
 ```javascript
 var inputs = {
@@ -83,7 +91,7 @@ txHash = await bridge.contractWrite(inputs);
 // Output Tansaction Hash
 ```
 
-## To Call Contract function from Blockchain
+### To Call Contract function from Blockchain
 
 ```javascript
 var callargs = {
