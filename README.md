@@ -4,7 +4,7 @@
 
 <h1 align="center">Welcome to NULS Bridge Browser Plugin 👋</h1>
 <p align="center">
-  <img alt="Version" src="https://img.shields.io/badge/version-0.2 Beta-blue.svg?cacheSeconds=2592000" />
+  <img alt="Version" src="https://img.shields.io/badge/version-0.4.1 Beta-blue.svg?cacheSeconds=2592000" />
   <a href="https://github.com/rohanashik/nulsbridge#readme" target="_blank">
     <img alt="Documentation" src="https://img.shields.io/badge/documentation-yes-brightgreen.svg" />
   </a>
@@ -109,11 +109,11 @@ output = await bridge.contractCall(callargs);
 
 
 
-## Author
+## 👤 Author
 
-👤 **Rohan Ashik**
+**Rohan Ashik**
 
-* Website: rohanashik.com
+* Website: rohanashik.co
 * Twitter: [@Rohanashik](https://twitter.com/Rohanashik)
 * GitHub: [@rohanashik](https://github.com/rohanashik)
 * LinkedIn: [@rohanashik](https://linkedin.com/in/rohanashik)

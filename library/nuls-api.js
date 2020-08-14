@@ -6,6 +6,9 @@ var baseurl = "http://beta.api.nuls.io";
 var clienturl = "http://beta.api.nuls.io/jsonrpc";
 var publicurl = 'http://beta.public1.nuls.io/jsonrpc';
 
+var mclienturl = "https://api.nuls.io/jsonrpc";
+var mpublicurl = 'https://public1.nuls.io/jsonrpc';
+
 var chainID = 2;
 var assetChainId = 2;
 
@@ -38,9 +41,9 @@ async function feeCalculator(contractAddress, fromAddress, toAddress, amount, de
     handledata(newamount);
 }
 
-async function gasCalculator(contractAddress, methodName, cvalue, sender, args, handledata) {
+async function gasCalculator(chain_id, contractAddress, methodName, cvalue, sender, args, handledata) {
     var contractCall = {
-        chainId: 2,
+        chainId: chain_id,
         sender: sender,
         contractAddress: contractAddress.toString(),
         value: cvalue,
@@ -64,7 +67,7 @@ async function gasCalculator(contractAddress, methodName, cvalue, sender, args, 
     handledata(Number(newamount/100000000));
 }
 
-async function sendTransaction(transfertype, assetsChainId, assettype, fromAddress, publicKey, privateKey, toAddress, amount, balanceInfo, decimals, handledata) {
+async function sendTransaction(chain_id, transfertype, assetsChainId, assettype, fromAddress, publicKey, privateKey, toAddress, amount, balanceInfo, decimals, handledata) {
     console.log(transfertype);
 
     var assetsId = 1;
@@ -78,13 +81,13 @@ async function sendTransaction(transfertype, assetsChainId, assettype, fromAddre
                 amount: amount * decimals,
                 fee: 100000
             };
-        if (assetsChainId === 2) {
+        if (assetsChainId === 2 || assetsChainId === 1) {
             //NULS COIN
             var type = 2;
-            await transact(privateKey, publicKey, transferInfo, balanceInfo, type, "", "", handledata);
+            await transact(chain_id, privateKey, publicKey, transferInfo, balanceInfo, type, "", "", handledata);
         }else {
             type = 10;
-            transactCross(privateKey, publicKey, transferInfo, balanceInfo, type, "", "", handledata);
+            transactCross(chain_id, privateKey, publicKey, transferInfo, balanceInfo, type, "", "", handledata);
         }
         // }else{
         //     CROSS COIN
@@ -103,7 +106,7 @@ async function sendTransaction(transfertype, assetsChainId, assettype, fromAddre
     }else{
         //TOKEN
         var contractCall = {
-            chainId: assetsChainId,
+            chainId: chain_id,
             sender: fromAddress,
             contractAddress: assettype.toString(),
             value: 0, //
@@ -111,6 +114,7 @@ async function sendTransaction(transfertype, assetsChainId, assettype, fromAddre
             methodDesc: "",
             args: [toAddress, amount*decimals]
         };
+        // console.log(contractCall);
 
         await callContract(privateKey, publicKey, fromAddress, assetsChainId, assetsId, contractCall, balanceInfo, '', handledata);
 
@@ -295,6 +299,7 @@ async function sendTransaction(transfertype, assetsChainId, assettype, fromAddre
 }
 
 async function callContract(privateKey, publicKey, fromAddress, assetsChainId, assetsId, contractCall, balanceInfo, remark, handledata){
+    console.log("contractcall --->"+ contractCall);
     var type = 16;
     var contractAddress = contractCall.contractAddress;
     var value = Number(contractCall.value);
@@ -321,13 +326,13 @@ async function callContract(privateKey, publicKey, fromAddress, assetsChainId, a
         transferInfo.toAddress = contractAddress;
         transferInfo.value = contractCall.value;
     }
-    await transact(privateKey, publicKey, transferInfo, balanceInfo, type, contractCallTxData, remark,  handledata);
+    await transact(contractCall.chainId, privateKey, publicKey, transferInfo, balanceInfo, type, contractCallTxData, remark,  handledata);
 }
 
-async function transact(privateKey, publicKey, transferInfo, balanceInfo, type, info, remark, handledata) {
+async function transact(chain_id, privateKey, publicKey, transferInfo, balanceInfo, type, info, remark, handledata) {
 
     console.log("Type ---> "+type);
-    let inOrOutputs = await inputsOrOutputs(transferInfo, balanceInfo, type);
+    let inOrOutputs = await inputsOrOutputs(chain_id, transferInfo, balanceInfo, type);
     console.log(JSON.stringify(inOrOutputs));
     if (inOrOutputs.success) {
         tAssemble = nuls.transactionAssemble(inOrOutputs.data.inputs, inOrOutputs.data.outputs, remark, type, info);
@@ -336,7 +341,7 @@ async function transact(privateKey, publicKey, transferInfo, balanceInfo, type, 
         console.log(transferInfo.fee +" "+newFee);
         if (transferInfo.fee !== newFee) {
             transferInfo.fee = newFee;
-            inOrOutputs = await inputsOrOutputs(transferInfo, balanceInfo, type);
+            inOrOutputs = await inputsOrOutputs(chain_id, transferInfo, balanceInfo, type);
             tAssemble = nuls.transactionAssemble(inOrOutputs.data.inputs, inOrOutputs.data.outputs, remark, type, info);
             txhex = nuls.transactionSerialize(privateKey, publicKey, tAssemble);
         } else {
@@ -344,11 +349,11 @@ async function transact(privateKey, publicKey, transferInfo, balanceInfo, type, 
         }
     }
 
-    var validatetxresult = await validateTx(txhex);
+    var validatetxresult = await validateTx(chain_id, txhex);
     console.log(JSON.stringify(validatetxresult));
     if (validatetxresult.success) {
         // console.log(result.data.value);
-        var broadcasttx = await broadcastTx(txhex);
+        var broadcasttx = await broadcastTx(chain_id, txhex);
         if (broadcasttx && broadcasttx.value) {
             console.log("Tx Success");
             handledata(true, broadcasttx.hash);
@@ -364,14 +369,15 @@ async function transact(privateKey, publicKey, transferInfo, balanceInfo, type, 
 
 }
 
-async function transactCross(privateKey, publicKey, transferInfo, balanceInfo, type, info, remark, handledata) {
+async function transactCross(chainIdn, privateKey, publicKey, transferInfo, balanceInfo, type, info, remark, handledata) {
 
     console.log("Type ---> " + type);
-    let inOrOutputs = await inputsOrOutputs(transferInfo, balanceInfo, type);
+    console.log("Type ---> " + chainIdn);
+    let inOrOutputs = await inputsOrOutputs(chainIdn, transferInfo, balanceInfo, type);
 
-    console.log(inOrOutputs);
+    console.log("Inorout ---> " + inOrOutputs);
 
-    var createTransferTx = await createTransferTxOffline(inOrOutputs);
+    var createTransferTx = await createTransferTxOffline(chainIdn, inOrOutputs);
 
     console.log(createTransferTx);
     console.log(createTransferTx.txHex);
@@ -396,7 +402,7 @@ async function transactCross(privateKey, publicKey, transferInfo, balanceInfo, t
 
     // txhex = nuls.transactionSignature(privateKey, tAssemble);
 
-    var prisign = await priKeySign(2, txHex, transferInfo.fromAddress, privateKey);
+    var prisign = await priKeySign(chainIdn, txHex, transferInfo.fromAddress, privateKey);
 
 
     console.log(prisign.txHex);
@@ -406,7 +412,7 @@ async function transactCross(privateKey, publicKey, transferInfo, balanceInfo, t
     // console.log(JSON.stringify(validatetxresult));
     // if (validatetxresult.success) {
     // console.log(result.data.value);
-    var broadcasttx = await broadcastTx(prisign.txHex);
+    var broadcasttx = await broadcastTx(chainIdn, prisign.txHex);
     console.log(JSON.stringify(broadcasttx));
     if (broadcasttx && broadcasttx.value) {
         console.log("Tx Success");
@@ -440,7 +446,7 @@ function countFee(tx, signatrueCount) {
     return 100000 * Math.ceil(txSize / 1024);
 }
 
-async function inputsOrOutputs(transferInfo, balanceInfo, type) {
+async function inputsOrOutputs(chainIdn, transferInfo, balanceInfo, type) {
     let newAmount = transferInfo.amount + transferInfo.fee;
     let newLocked = 0;
     let newNonce = balanceInfo.nonce;
@@ -451,7 +457,7 @@ async function inputsOrOutputs(transferInfo, balanceInfo, type) {
     }
 
     if (type === 10) {
-        var response = await getAccountBalance(2, transferInfo.assetsChainId, 1, transferInfo.fromAddress);
+        var response = await getAccountBalance(chainIdn, transferInfo.assetsChainId, 1, transferInfo.fromAddress);
 
         console.log(JSON.stringify(response));
         var inputs = [{
@@ -462,7 +468,7 @@ async function inputsOrOutputs(transferInfo, balanceInfo, type) {
             nonce: response.result.nonce
         }, {
             address: transferInfo.fromAddress,
-            assetChainId: 2,
+            assetChainId: chainIdn,
             assetId: transferInfo.assetsId,
             amount: transferInfo.fee,
             nonce: newNonce
@@ -523,7 +529,7 @@ async function makeCallData(chainId, sender, value, contractAddress, methodName,
     contractCall.price = CONTRACT_MINIMUM_PRICE;
     contractCall.methodName = methodName;
     contractCall.methodDesc = methodDesc;
-    var argsTypesResult = await getContractMethodArgsTypes(contractAddress, methodName, methodDesc);
+    var argsTypesResult = await getContractMethodArgsTypes(chainId, contractAddress, methodName, methodDesc);
     // var argsTypesResult = contractarg;
     // console.log(data);
     if (argsTypesResult.success) {
@@ -540,9 +546,9 @@ async function makeCallData(chainId, sender, value, contractAddress, methodName,
 }
 
 async function imputedCallGas(chainId, sender, value, contractAddress, methodName, methodDesc, args) {
-    var result = await validateContractCall(sender, value, CONTRACT_MAX_GASLIMIT, CONTRACT_MINIMUM_PRICE, contractAddress, methodName, methodDesc, args)
+    var result = await validateContractCall(chainId, sender, value, CONTRACT_MAX_GASLIMIT, CONTRACT_MINIMUM_PRICE, contractAddress, methodName, methodDesc, args)
     if (result.success) {
-        var gasResult = await imputedContractCallGas(sender, value, contractAddress, methodName, methodDesc, args)
+        var gasResult = await imputedContractCallGas(chainId, sender, value, contractAddress, methodName, methodDesc, args)
         return Number(gasResult.data.gasLimit);
     } else {
         console.log("Call contract verification failed\n", result)
@@ -618,13 +624,17 @@ function twoDimensionalArray(args, types) {
 
 // async function getAccountBalance(address) {
 async function getAccountBalance(chainIdn, assetChainIdn = 2, assetId = 1, address) {
+    if (chainIdn === 1)
+        requrl = mclienturl
+    else
+        requrl = clienturl
     var request = {
         jsonrpc: "2.0",
         method: "getAccountBalance",
         params: [chainIdn, assetChainIdn, assetId, address],
         id: 1234
     };
-    let githubResponse = await fetch(clienturl, {
+    let githubResponse = await fetch(requrl, {
         method: 'POST',
         headers: {
             'Accept': 'application/json',
@@ -635,7 +645,11 @@ async function getAccountBalance(chainIdn, assetChainIdn = 2, assetId = 1, addre
     return await githubResponse.json();
 }
 
-async function getTokenBalance(address, tokenContract) {
+async function getTokenBalance(chainIdn, address, tokenContract) {
+    if (chainIdn === 1)
+        requrl = mclienturl
+    else
+        requrl = clienturl
     var request = {
         jsonrpc: "2.0",
         method: "getTokenBalance",
@@ -672,15 +686,19 @@ async function getInvokeContract(contractAddress, methodName, args) {
 }
 
 
-async function getTokensList(address) {
+async function getTokensList(chainIdn, address) {
+    if (chainIdn === 1)
+        requrl = mpublicurl
+    else
+        requrl = publicurl
     var request = {
         jsonrpc: "2.0",
         method: "getAccountTokens",
-        params: [chainID, 1, 100, address],
+        params: [chainIdn, 1, 100, address],
         id: 1234
     };
 
-    let githubResponse = await fetch(publicurl, {
+    let githubResponse = await fetch(requrl, {
         method: 'POST',
         headers: {
             'Accept': 'application/json',
@@ -691,15 +709,19 @@ async function getTokensList(address) {
     return await githubResponse.json();
 }
 
-async function getCrossAssetsList(address) {
+async function getCrossAssetsList(chainIdn, address) {
+    if (chainIdn === 1)
+        requrl = mpublicurl
+    else
+        requrl = publicurl
     var request = {
         jsonrpc: "2.0",
         method: "getAccountCrossLedgerList",
-        params: [chainID, address],
+        params: [chainIdn, address],
         id: 1234
     };
 
-    let githubResponse = await fetch(publicurl, {
+    let githubResponse = await fetch(requrl, {
         method: 'POST',
         headers: {
             'Accept': 'application/json',
@@ -710,15 +732,19 @@ async function getCrossAssetsList(address) {
     return await githubResponse.json();
 }
 
-async function validateTx(txhex) {
+async function validateTx(chainIdn, txhex) {
+    if (chainIdn === 1)
+        requrl = mclienturl
+    else
+        requrl = clienturl
     var request = {
         jsonrpc: "2.0",
         method: "validateTx",
-        params: [chainID, txhex],
+        params: [chainIdn, txhex],
         id: 1234
     };
 
-    let githubResponse = await fetch(clienturl, {
+    let githubResponse = await fetch(requrl, {
         method: 'POST',
         headers: {
             'Accept': 'application/json',
@@ -736,7 +762,11 @@ async function validateTx(txhex) {
 
 }
 
-async function createTransferTxOffline(inOrOutputs) {
+async function createTransferTxOffline(chainIdn, inOrOutputs) {
+    if (chainIdn === 1)
+        requrl = mclienturl
+    else
+        requrl = clienturl
     var params = [inOrOutputs.data.inputs, inOrOutputs.data.outputs, ""];
     console.log(JSON.stringify(params));
     var request = {
@@ -746,7 +776,7 @@ async function createTransferTxOffline(inOrOutputs) {
         id: 1234
     };
 
-    let githubResponse = await fetch(clienturl, {
+    let githubResponse = await fetch(requrl, {
         method: 'POST',
         headers: {
             'Accept': 'application/json',
@@ -764,16 +794,19 @@ async function createTransferTxOffline(inOrOutputs) {
 
 }
 
-async function priKeySign(chainID, txHex, account, accountPriKey) {
-
+async function priKeySign(chainIdn, txHex, account, accountPriKey) {
+    if (chainIdn === 1)
+        requrl = mclienturl
+    else
+        requrl = clienturl
     var request = {
         jsonrpc: "2.0",
         method: "priKeySign",
-        params: [chainID, txHex, account, accountPriKey],
+        params: [chainIdn, txHex, account, accountPriKey],
         id: 1234
     };
 
-    let githubResponse = await fetch(clienturl, {
+    let githubResponse = await fetch(requrl, {
         method: 'POST',
         headers: {
             'Accept': 'application/json',
@@ -817,15 +850,19 @@ async function sendCrossTx(txhex) {
 
 }
 
-async function broadcastTx(txhex) {
+async function broadcastTx(chainIdn, txhex) {
+    if (chainIdn === 1)
+        requrl = mclienturl
+    else
+        requrl = clienturl
     var request = {
         jsonrpc: "2.0",
         method: "broadcastTx",
-        params: [chainID, txhex],
+        params: [chainIdn, txhex],
         id: 1234
     };
 
-    let githubResponse = await fetch(clienturl, {
+    let githubResponse = await fetch(requrl, {
         method: 'POST',
         headers: {
             'Accept': 'application/json',
@@ -842,15 +879,19 @@ async function broadcastTx(txhex) {
     }
 }
 
-async function validateContractCall(sender, value, gasLimit, price, contractAddress, methodName, methodDesc, args) {
+async function validateContractCall(chainIdn, sender, value, gasLimit, price, contractAddress, methodName, methodDesc, args) {
+    if (chainIdn === 1)
+        requrl = mclienturl
+    else
+        requrl = clienturl
     var request = {
         jsonrpc: "2.0",
         method: "validateContractCall",
-        params: [chainID, sender, value, gasLimit, price, contractAddress, methodName, methodDesc, args],
+        params: [chainIdn, sender, value, gasLimit, price, contractAddress, methodName, methodDesc, args],
         id: 1234
     };
 
-    let githubResponse = await fetch(clienturl, {
+    let githubResponse = await fetch(requrl, {
         method: 'POST',
         headers: {
             'Accept': 'application/json',
@@ -867,15 +908,19 @@ async function validateContractCall(sender, value, gasLimit, price, contractAddr
     }
 }
 
-async function imputedContractCallGas(sender, value, contractAddress, methodName, methodDesc, args) {
+async function imputedContractCallGas(chainIdn, sender, value, contractAddress, methodName, methodDesc, args) {
+    if (chainIdn === 1)
+        requrl = mclienturl
+    else
+        requrl = clienturl
     var request = {
         jsonrpc: "2.0",
         method: "imputedContractCallGas",
-        params: [chainID, sender, value, contractAddress, methodName, methodDesc, args],
+        params: [chainIdn, sender, value, contractAddress, methodName, methodDesc, args],
         id: 1234
     };
 
-    let githubResponse = await fetch(clienturl, {
+    let githubResponse = await fetch(requrl, {
         method: 'POST',
         headers: {
             'Accept': 'application/json',
@@ -892,15 +937,19 @@ async function imputedContractCallGas(sender, value, contractAddress, methodName
     }
 }
 
-async function getContractMethodArgsTypes(contractAddress, methodName, methodDesc) {
+async function getContractMethodArgsTypes(chainIdn, contractAddress, methodName, methodDesc) {
+    if (chainIdn === 1)
+        requrl = mclienturl
+    else
+        requrl = clienturl
     var request = {
         jsonrpc: "2.0",
         method: "getContractMethodArgsTypes",
-        params: [2, contractAddress, methodName, methodDesc],
+        params: [chainIdn, contractAddress, methodName, methodDesc],
         id: 1234
     };
 
-    let githubResponse = await fetch(clienturl, {
+    let githubResponse = await fetch(requrl, {
         method: 'POST',
         headers: {
             'Accept': 'application/json',

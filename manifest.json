@@ -43,5 +43,6 @@
 	"permissions": [
 		"storage", "notifications", "tabs", "activeTab", "unlimitedStorage", "clipboardWrite",
 		"<all_urls>"
-	]
+	],
+	"content_security_policy": "script-src 'self' https://cdn.jsdelivr.net/npm/vue/dist/vue.js; object-src 'self'"
 }

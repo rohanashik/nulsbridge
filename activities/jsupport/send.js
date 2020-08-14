@@ -2,6 +2,7 @@
 $(function() {
     var dropdown = document.getElementById('assetlist');
     const nuls = window.nulsjs('nuls-sdk-js');
+    var chain_id = 2;
 
     chrome.storage.local.get('current', function(bucket) {
         if(bucket.current) {
@@ -9,7 +10,8 @@ $(function() {
             document.getElementById("sender_address").innerText = current['address'];
             document.getElementById("rev_sender").innerText = current['address'];
             var balance = current['totalBalance']/100000000;
-            dropdown.innerHTML += '<option value="2" data-assetid="2" data-decimals="100000000" data-dcplace="8" data-type="coin" data-balance="'+balance+'">NULS</option>';
+            chain_id = parseInt(current['chain_id']);
+            dropdown.innerHTML += '<option value="2" data-assetschainid="'+chain_id+'" data-decimals="100000000" data-dcplace="8" data-type="coin" data-balance="'+balance+'">NULS</option>';
             document.getElementById("send_balance").innerText= balance + " NULS";
             document.getElementById("cryp_balance").value=balance;
             document.getElementById("cryp_sender").value=current['address'];
@@ -35,7 +37,7 @@ $(function() {
             var dcplace = bucket.current_tokens[i]['decimals'];
             var decimals = decimalConvertor(dcplace);
             var balance = bucket.current_tokens[i]['balance']/decimals;
-            dropdown.innerHTML += '<option value="'+contractAddress+'" data-assetid="2" data-dcplace="'+dcplace+'" data-decimals="'+decimals+'" data-type="token" data-balance="'+balance+'">'+symbol+'</option>';
+            dropdown.innerHTML += '<option value="'+contractAddress+'" data-assetschainid="'+chain_id+'" data-dcplace="'+dcplace+'" data-decimals="'+decimals+'" data-type="token" data-balance="'+balance+'">'+symbol+'</option>';
         }
     });
 
@@ -43,11 +45,11 @@ $(function() {
         var crossassets = Object.keys(bucket['current_cross']).length;
         for(var i=0; crossassets > i; i++){
             var symbol = bucket.current_cross[i]['symbol'];
-            var assetId = bucket.current_cross[i]['chainId'];
+            var chainId = bucket.current_cross[i]['chainId'];
             var dcplace = bucket.current_cross[i]['decimals'];
             var decimals = decimalConvertor(dcplace);
             var balance = bucket.current_cross[i]['balance']/decimals;
-            dropdown.innerHTML += '<option value="2" data-assetid="'+assetId+'" data-dcplace="'+dcplace+'" data-decimals="'+decimals+'" data-type="coin" data-balance="'+balance+'">'+symbol+'</option>';
+            dropdown.innerHTML += '<option value="2" data-assetschainid="'+chainId+'" data-dcplace="'+dcplace+'" data-decimals="'+decimals+'" data-type="coin" data-balance="'+balance+'">'+symbol+'</option>';
         }
     });
 
@@ -99,7 +101,7 @@ $(function() {
                 //     $('#rev_fee').text(data/10000000 + "NULS");
                 // });
 
-                gasCalculator(assettype.value, "transfer", 0, cryp_sender, [receiver, cryp_amount * decimals], function (gasresult) {
+                gasCalculator(chain_id, assettype.value, "transfer", 0, cryp_sender, [receiver, cryp_amount * decimals], function (gasresult) {
                     $('#rev_fee').text(gasresult + "NULS");
                 })
             }
@@ -112,6 +114,8 @@ $(function() {
     $('#openscan').on('click', function (e) {
         var txhash = document.getElementById("txhash").value;
         var url = "http://beta.nulscan.io/transaction/info?hash="+txhash;
+        if (chain_id === 1)
+            url = "https://nulscan.io/transaction/info?hash="+txhash;
         chrome.tabs.create({url:url, active: true});
         return false;
     });
@@ -134,11 +138,11 @@ $(function() {
         var e = document.getElementById("assetlist");
         var assettype = e.options[e.selectedIndex];
 
-        var chainIdn = assettype.getAttribute('data-value');
-        var assetidn = assettype.getAttribute('data-assetid');
+        var assetschainidn = assettype.getAttribute('data-assetschainid');
         var decimals = assettype.getAttribute('data-decimals');
         var transfertype = assettype.getAttribute('data-type');
-        console.log(assetidn);
+        console.log(assetschainidn);
+
 
         send_error.style.display = "none";
         chrome.storage.local.get('current', async function(bucket) {
@@ -146,17 +150,17 @@ $(function() {
                 var current = bucket.current;
                 console.log(JSON.stringify(current));
                 var privatekey = nuls.decrypteOfAES(current.encryptedPrivateKey, send_pass);
-                var account = nuls.importByKey(2, privatekey, send_pass, "");
+                var account = nuls.importByKey(chain_id, privatekey, send_pass, "");
                 if (account.address === current.address) {
                     document.getElementById("trns_ico").src = "/assets/loaderw.gif";
                     document.getElementById("trns_txt").innerText = "PROCESSING...";
-                    var response = await chrome.extension.getBackgroundPage().getAccountBalance(2, 2, 1, account.address);
+                    var response = await chrome.extension.getBackgroundPage().getAccountBalance(chain_id, chain_id, 1, account.address);
                     var balance = response.result;
                     console.log("PublicKey"+account.pub);
                     console.log("privatekey"+privatekey);
                     console.log(JSON.stringify(balance));
                     var publicKey = account.pub;
-                    sendTransaction(transfertype, parseInt(assetidn), assettype.value, account.address, publicKey,  privatekey, receiver, cryp_amount, balance, decimals, function (status, response) {
+                    sendTransaction(chain_id, transfertype, parseInt(assetschainidn), assettype.value, account.address, publicKey,  privatekey, receiver, cryp_amount, balance, decimals, function (status, response) {
                         if(status) {
                             $('#view_send_review').hide();
                             $('#view_send_success').show();

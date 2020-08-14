@@ -7,6 +7,7 @@ $(function(){
 	const nuls = window.nulsjs('nuls-sdk-js');
 	// console.log(getchromevault('master'));
 	// MENU ACTION
+
 	$("#showAccounts").click(function(){
 		console.log("clicked");
 		$("#myDropdown").toggleClass("show");
@@ -70,6 +71,7 @@ $(function(){
 		var import_pri = document.getElementById("import_pri").value;
 		var import_newpass = document.getElementById("import_newpass").value;
 		var import_confirmpass = document.getElementById("import_confirmpass").value;
+		var network = document.getElementById("myonoffswitch").checked;
 		error.style.display = "none";
 		if(import_newpass !== import_confirmpass){
 			error.style.display = "block";
@@ -79,11 +81,16 @@ $(function(){
 			error_msg.innerText = "8-20 alphanumeric password Required!";
 		}else if(import_newpass === import_confirmpass && validatePassword(import_confirmpass)){
 			document.getElementById("mainlogo").src = "/assets/loader.gif";
-			var importaddress = nuls.importByKey(2, import_pri, import_confirmpass, "");
+			var chainid = 2;
+			if(network){
+				chainid = 1;
+			}
+			var importaddress = nuls.importByKey(chainid, import_pri, import_confirmpass, "");
 			var account = {
 				'address': importaddress.address,
 				'encryptedPrivateKey': importaddress.aesPri,
-				'pubKey': importaddress.pub
+				'pubKey': importaddress.pub,
+				'chain_id': chainid
 			};
 			chrome.storage.local.get('accounts', function(bucket){
 				var accounts = "";
@@ -107,6 +114,7 @@ $(function(){
 		var error_msg = document.getElementById("createaccount_error_message");
 		var pass = document.getElementById("createaccount_newpass").value;
 		var conpass = document.getElementById("createaccount_confirmpass").value;
+		var network = document.getElementById("myonoffswitch").checked;
 		error.style.display = "none";
 		if(pass !== conpass){
 			error.style.display = "block";
@@ -116,7 +124,11 @@ $(function(){
 			error_msg.innerText = "8-20 alphanumeric password Required!";
 		}else if(pass === conpass && validatePassword(pass)){
 			document.getElementById("mainlogo").src = "/assets/loader.gif";
-			var newAddress = nuls.newAddress(2, pass, "");
+			var chainid = 2;
+			if(network){
+				chainid = 1;
+			}
+			var newAddress = nuls.newAddress(chainid, pass, "");
 			// console.log("New Account Created: "+newAddress);
 			// console.log("New Account Created: "+JSON.stringify(newAddress));
 			// console.log("New Account AES: "+newAddress.aesPri);
@@ -124,7 +136,8 @@ $(function(){
 			var account = {
 				'address': newAddress.address,
 				'encryptedPrivateKey': newAddress.aesPri,
-				'pubKey': newAddress.pub
+				'pubKey': newAddress.pub,
+				'chain_id': chainid
 			};
 			chrome.storage.local.get('accounts', function(bucket){
 				var accounts = "";
@@ -150,19 +163,25 @@ $(function(){
 
 	$('#btn_keystore').on('click', function () {
 		var keystore_pass = document.getElementById("keystore_pass").value;
+		var network = document.getElementById("myonoffswitch").checked;
 		$('#keystore_error').hide();
 		var reader = new FileReader();
 		reader.onload = function (event) {
 			var keystore = JSON.parse(event.target.result);
 			console.log(keystore.encryptedPrivateKey);
+			var chainid = 2;
+			if(network){
+				chainid = 1;
+			}
 			var privatekey = nuls.decrypteOfAES(keystore.encryptedPrivateKey, keystore_pass);
-			var account = nuls.importByKey(2, privatekey, keystore_pass, "");
+			var account = nuls.importByKey(chainid, privatekey, keystore_pass, "");
 			console.log( JSON.stringify(account) +"  "+ keystore.address);
 			if (account.address === keystore.address) {
 				var newaccount = {
 					'address': account.address,
 					'encryptedPrivateKey': account.aesPri,
-					'pubKey': account.pub
+					'pubKey': account.pub,
+					'chain_id': chainid
 				};
 				chrome.storage.local.get('accounts', function(bucket){
 					var existAccount = false;

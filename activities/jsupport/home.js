@@ -1,5 +1,5 @@
-
 $(function() {
+
 
     // function getAcceptLanguages() {
     //     chrome.i18n.getAcceptLanguages(function(languageList) {
@@ -22,15 +22,15 @@ $(function() {
     });
 
     async function initiatplugin(current) {
-        var balanceresult = await chrome.extension.getBackgroundPage().getAccountBalance(2, 2, 1, current['address']);
-
+        var balanceresult = await chrome.extension.getBackgroundPage().getAccountBalance(current['chain_id'], current['chain_id'], 1, current['address']);
+        console.log(balanceresult)
         var balance = balanceresult.result.totalBalance;
         current.totalBalance = balance;
         document.getElementById("coinbalance").innerText = (balance / 100000000).toFixed(3);
         chrome.storage.local.set({'current': current});
 
-        var tokenresult = await chrome.extension.getBackgroundPage().getTokensList(current['address']);
-        var crossresult = await chrome.extension.getBackgroundPage().getCrossAssetsList(current['address']);
+        var tokenresult = await chrome.extension.getBackgroundPage().getTokensList(current['chain_id'], current['address']);
+        var crossresult = await chrome.extension.getBackgroundPage().getCrossAssetsList(current['chain_id'], current['address']);
         // console.log("Cross Assets ---> "+JSON.stringify(crossresult));
         console.log("Token Assets ---> "+JSON.stringify(tokenresult));
 
@@ -100,17 +100,26 @@ $(function() {
     }
 
     chrome.storage.local.get('accounts', function(bucket) {
+        var menuview_testnet = document.getElementById('menuview_testnet');
+        var menuview_mainnet = document.getElementById('menuview_mainnet');
+        var menuview_all = document.getElementById('menuview_all');
         var myDropdown = document.getElementById('myDropdown');
         var accounts = Object.keys(bucket['accounts']['list']).length;
         // console.log(JSON.stringify(bucket['accounts']['list']));
         for(var i=0; accounts > i; i++){
             // console.log(bucket.accounts['list'][i]['address']);
             var adrs = bucket.accounts['list'][i]['address'];
-            myDropdown.innerHTML += '<p class="navmenu" id="'+adrs+'">'+addresstrim(adrs)+'</p>';
+            if(bucket.accounts['list'][i]['chain_id'] === 1){
+                $('#def_main_wallet').hide();
+                menuview_mainnet.innerHTML += '<p class="navmenu" id="'+adrs+'">'+addresstrim(adrs)+'</p>';
+            }else if(bucket.accounts['list'][i]['chain_id'] === 2){
+                $('#def_test_wallet').hide();
+                menuview_testnet.innerHTML += '<p class="navmenu" id="'+adrs+'">'+addresstrim(adrs)+'</p>';
+            }
         }
-        myDropdown.innerHTML += '<p class="navmenu" id="new_acc">Create/Import Wallet</p>';
-        myDropdown.innerHTML += '<p class="navmenu" id="acc_manage">Manage Wallets</p>';
-        myDropdown.innerHTML += '<p class="navmenu" id="settings">Settings</p>';
+        menuview_all.innerHTML += '<p class="navmenu" id="new_acc">Create/Import Wallet</p>';
+        menuview_all.innerHTML += '<p class="navmenu" id="acc_manage">Manage Wallets</p>';
+        menuview_all.innerHTML += '<p class="navmenu" id="settings">Settings</p>';
     });
 
 

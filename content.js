@@ -1,5 +1,12 @@
-console.log("Hellow Word!");
-console.log("Nuls Chrome Plugin");
+var version = "0.10 Beta";
+
+console.log(
+	`%c NULS Bridge %c Detected v${version} %c`,
+	'background:#3b3b3b ; padding: 1px; border-radius: 3px 0 0 3px;  color: #fff',
+	'background:#7DB43D ; padding: 1px; border-radius: 0 3px 3px 0;  color: #fff',
+	'background:transparent'
+);
+
 var targetOrgin = location.origin;
 function injectScript(file, node) {
 	var th = document.getElementsByTagName(node)[0];

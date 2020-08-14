@@ -1,4 +1,12 @@
-console.log("Nuls Chrome Background Plugin");
+var version = "0.10 Beta";
+
+console.log(
+	`%c NULS Bridge %c Background v${version} %c`,
+	'background:#3b3b3b ; padding: 1px; border-radius: 3px 0 0 3px;  color: #fff',
+	'background:#7DB43D ; padding: 1px; border-radius: 0 3px 3px 0;  color: #fff',
+	'background:transparent'
+);
+
 // const nuls = window.nulsjs('nuls-sdk-js');
 
 // var arrinfo = nuls.newAddress(2, "", "");
@@ -62,7 +70,8 @@ function portConnected(port){
 				let output = await getAccountBalance(2, 2, 1, m.data);
 				port.postMessage({type: "getBalance", data: output});
 			}else if(m.type === 'getTokenBalance'){
-				let output = await getTokenBalance(m.data.address, m.data.contract);
+				//TODO CHAINID
+				let output = await getTokenBalance(2, m.data.address, m.data.contract);
 				port.postMessage({type: m.type, data: output});
 			}else if(m.type === 'contractCall'){
 				if(hasAllProperties(m.data,["contractAddress", "methodName", "args"])) {

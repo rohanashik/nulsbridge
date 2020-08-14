@@ -241,6 +241,9 @@ div.right{
 .mrgt7{
 	margin-top: 7px;
 }
+.mrgt9{
+	margin-top: 9px;
+}
 .mrgt10{
 	margin-top: 10px;
 }
@@ -618,22 +621,39 @@ input[type=checkbox].css-checkbox {
 	z-index: 1;
 }
 
-.dropdown-content a ,.dropdown-content p {
+.dropdown-content a ,.dropdown-content p.navmenu {
 	color: #eee;
 	cursor: pointer;
-	padding: 12px 12px;
+	padding: 10px 12px;
 	text-decoration: none;
 	display: block;
 	font-size: 10px;
 }
 
-.dropdown a:hover, .dropdown p:hover {
+.dropdown a:hover, .dropdown p.navmenu:hover {
 	background-color: #333333;
 	border-radius: 5px;
 }
 
 .show {display: block;}
 
+
+.menuheadp{
+	font-size:9.5px !important;
+	color:#a8a8a8 !important;
+	padding: 5px 10px;
+}
+.navmenu{
+	font-size:9.5px !important;
+}
+
+.navmenu_low{
+	color: #ccc;
+	padding: 10px 12px;
+	text-decoration: none;
+	display: block;
+	font-size: 10px;
+}
 
 
 /*TOOLTIP*/

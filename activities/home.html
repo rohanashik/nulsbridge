@@ -1,9 +1,3 @@
-<!--
-  This is the popup  HTML file. It will appear whenever the user
-  presses the extension button.  It just a plain old web page!
-  But it can communicate with the background and content scripts
--->
-
 <!DOCTYPE html>
 <html>
   <head>
@@ -24,20 +18,35 @@
   </head>
   <body>
   
-  <div class="container">
-      
+  <div class="container" id="bridgeapp">
+
 	  <nav>
 		  <img src="/assets/bridge.png" height="30px" id="nulslogo"/>
 		  <div class="float-right">
 			  <div class="dropdown" style="float:right;">
 		  		<img src="/assets/accounts.png" width="30px" id="showAccounts" class="dropbtn pointer" />
+
 				  <div id="myDropdown" class="dropdown-content">
+
+					  <div id="menuview_testnet" class="mrgt9">
+						  <p class="menuheadp">Test Network</p>
+						  <p class="navmenu_low" id="def_test_wallet">No accounts found...</p>
+					  </div>
+					  <div id="menuview_mainnet" class="mrgt15">
+						  <p class="menuheadp">Main Network</p>
+						  <p class="navmenu_low" id="def_main_wallet">No accounts found...</p>
+					  </div>
+					  <div id="menuview_all" class="mrgt15 mrgb5">
+						  <p class="menuheadp">Other</p>
+
+					  </div>
+
 				  </div>
+
 			  </div>
 		  </div>
 	  </nav>
-		
-		
+
 	<div class="view_home">
 		<div class="mainbody">
 			<p class="phead" data-localize="__MSG_currentBalance__">Current Balance</p>

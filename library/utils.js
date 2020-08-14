@@ -25,7 +25,7 @@ $(function() {
 
 
 function addresstrim(address) {
-    return address.substring(0, 14)+'.....'+address.substring(38, 24);
+    return address.substring(0, 16)+'.....'+address.substring(38, 24);
 }
 
 function countDecimals(value) {

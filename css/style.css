@@ -176,6 +176,20 @@ table.token_list:hover{
 }
 
 
+select.getstartchain_select{
+	display:table;
+	font-family: 'Poppins', sans-serif;
+	font-weight:400;
+	padding: 5px 05px;
+	font-size:11px;
+	color: #8A8A8A;
+	margin:0px;
+	border:0;
+	width: auto;
+	outline:none;
+	cursor: pointer;
+}
+
 select.getstart_select{
 	display:table;
 	font-family: 'Poppins', sans-serif;
@@ -300,3 +314,68 @@ p.settings_head{
 .edit_container{
 	padding:15px 22px 15px 22px;
 }
+
+
+/* SWITCH */
+.onoffswitch {
+	position: relative;
+	width: 80px;
+	-webkit-user-select:none; -moz-user-select:none; -ms-user-select: none;
+}
+.onoffswitch-checkbox {
+	position: absolute;
+	opacity: 0;
+	pointer-events: none;
+}
+.onoffswitch-label {
+	display: block;
+	overflow: hidden; cursor: pointer;
+	border: 1.5px solid #ddd;
+	border-radius: 50px;
+}
+.onoffswitch-inner {
+	display: block;
+	width: 200%;
+	margin-left: -100%;
+	transition: margin 0.3s ease-in 0s;
+}
+.onoffswitch-inner:before, .onoffswitch-inner:after {
+	display: block;
+	float: left;
+	width: 50%;
+	height: 21px;
+	padding: 0;
+	line-height: 21px;
+	font-size: 9px;
+	color: white;
+	/*font-family: "Gilroy ExtraBold";*/
+	box-sizing: border-box;
+}
+.onoffswitch-inner:before {
+	content: "MAINNET";
+	padding-left: 11px;
+	/*background-color: #7DB43D; */
+	color: #666;
+}
+.onoffswitch-inner:after {
+	content: "TESTNET";
+	padding-right: 11px;
+	/*background-color: #969696; */
+	color: #666;
+	text-align: right;
+}
+.onoffswitch-switch {
+	display: block; width: 19px; margin: 1px;
+	background: #FFFFFF;
+	position: absolute; top: 0; bottom: 0;
+	right: 56px;
+	border: 1.5px solid #ddd; border-radius: 50px;
+	transition: all 0.3s ease-in 0s;
+}
+.onoffswitch-checkbox:checked + .onoffswitch-label .onoffswitch-inner {
+	margin-left: 0;
+}
+.onoffswitch-checkbox:checked + .onoffswitch-label .onoffswitch-switch {
+	right: 0px;
+}
+/* SWITCH */
