@@ -3,7 +3,6 @@
         <head>
             <meta charset="UTF-8">
             <title>NULS Bridge Test</title>
-			<script src="http://ajax.googleapis.com/ajax/libs/jquery/3.5.1/jquery.min.js"></script>
 
         </head>
         <body onload="myFunction()">
@@ -14,57 +13,55 @@
 
                 async function myFunction() {
 
-                    console.log("Authorization ---> "+await bridge.enable());
                     if (typeof window.bridge !== 'undefined') {
                         console.log('Bridge is installed!');
 
-                        // console.log(await bridge.clearData());
-
                         // console.log(await bridge.isConnected());
-                        // if(!await bridge.isConnected()) {
-                        //     console.log("Invoking Connection to Bridge");
-                        // }
+                        if(!await bridge.isConnected()) {
+                            console.log("Authorization ---> "+await bridge.enable());
+                            console.log("Invoking Connection to Bridge");
+                        }
 
-                        var address = await bridge.getWalletAddress();
-                        console.log("Default Account ---> "+ address);
+                        // await bridge.switchAccount();
+                        var wallet = await bridge.getDefaultWallet();
+                        console.log("Selected Address ---> "+ wallet.address);
+                        console.log("Selected Chain ---> "+ wallet.chain_id);
                         // console.log("Switch Account ---> "+await bridge.switchAccount());
 
                         //
                         // console.log("Connected to Bridge");
                         //
-                        // console.log("Accounts - " + JSON.stringify(await bridge.getAccounts("getAccountsList")));
-                        // var tokenbalance = await bridge.getTokenBalance(address, "tNULSeBaNBWvMJc6RxtwabsDux3mgPjEKtb3Lm");
-                        // console.log("TokenBalance - " + tokenbalance.amount);
-                        // var coinbalance = await bridge.getBalance(address);
-                        // console.log("CoinBalance - " + coinbalance.totalBalance);
-                        //
-                        //
+                        var coinbalance =
+                            await bridge.getBalance(address="tNULSeBaMhmHrnX4XJHbZxR4ypRun52s1uYnJB", chainid=2, assetChainId=2);
+                        var tokenbalance = await bridge.getTokenBalance(wallet.address, wallet.chain_id, "tNULSeBaNBWvMJc6RxtwabsDux3mgPjEKtb3Lm");
+                        console.log("TokenBalance - " + JSON.stringify(tokenbalance));
+                        console.log("CoinBalance - " + JSON.stringify(coinbalance));
+
                         var inputs = {
-                            "contractAddress": "tNULSeBaN2TLFuecRgASzC7KdbfjhbGD9MthHQ",
+                            "chainid": wallet.chain_id,
+                            "contractAddress": "NULSd6HgpNK7b7UEskaUb4nT4dy2vtVasmJju",
                             "methodName": "issue",
-                            "args": ["nulsv2bkjridasge"],
+                            "args": ["XCVGBHNJ1234"],
                             "value":0,
-                            "sender":"tNULSeBaMhmHrnX4XJHbZxR4ypRun52s1uYnJB"
+                            "sender": wallet.address
                         };
 
-                        console.log("Contract Write ---> "+JSON.stringify(await bridge.contractWrite(inputs)));
+                        // console.log("Contract Write ---> "+JSON.stringify(await bridge.contractWrite(inputs)));
 
                         var callargs = {
-                            "contractAddress": "tNULSeBaN2TLFuecRgASzC7KdbfjhbGD9MthHQ",
+                            "chainid": wallet.chain_id,
+                            "contractAddress": "NULSd6HgpNK7b7UEskaUb4nT4dy2vtVasmJju",
                             "methodName": "isIssued",
-                            "args": ["Rohan"]
+                            "args": ["XCVGBHNJ1234"]
                         };
 
-                        console.log("Contract Call ---> "+JSON.stringify(await bridge.contractCall(callargs)));
+                        // console.log("Contract Call ---> "+JSON.stringify(await bridge.contractCall(callargs)));
                         //
                         // console.log("DeAuthorized ---> "+await bridge.disable());
 
                     } else {
                         console.log('Bridge is not installed!');
                     }
-
-
-                    // bridge.enable();
 
                 }
 

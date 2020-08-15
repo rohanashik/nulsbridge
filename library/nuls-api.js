@@ -667,14 +667,18 @@ async function getTokenBalance(chainIdn, address, tokenContract) {
     return await githubResponse.json();
 }
 
-async function getInvokeContract(contractAddress, methodName, args) {
+async function getInvokeContract(chainIdn, contractAddress, methodName, args) {
+    if (chainIdn === 1)
+        requrl = mclienturl
+    else
+        requrl = clienturl
     var request = {
         jsonrpc: "2.0",
         method: "invokeView",
-        params: [chainID, contractAddress, methodName, "", args],
+        params: [chainIdn, contractAddress, methodName, "", args],
         id: 1234
     };
-    let githubResponse = await fetch(clienturl, {
+    let githubResponse = await fetch(requrl, {
         method: 'POST',
         headers: {
             'Accept': 'application/json',

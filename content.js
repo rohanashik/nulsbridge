@@ -1,7 +1,9 @@
-var version = "0.10 Beta";
+var manifestData = chrome.runtime.getManifest();
+
+var version = manifestData.version;
 
 console.log(
-	`%c NULS Bridge %c Detected v${version} %c`,
+	`%c NULS Bridge %c Version ${version} %c`,
 	'background:#3b3b3b ; padding: 1px; border-radius: 3px 0 0 3px;  color: #fff',
 	'background:#7DB43D ; padding: 1px; border-radius: 0 3px 3px 0;  color: #fff',
 	'background:transparent'
@@ -92,7 +94,7 @@ window.addEventListener("message", function(e) {
 			}else{
 				isallowed = false;
 			}
-			console.log(isallowed);
+			// console.log(isallowed);
 			e.source.postMessage({'type': 'isConnected', 'status': true, 'result': isallowed}, e.origin);
 		});
 	} else if (data.method && (data.method === "getAccountsList")) {
@@ -106,18 +108,21 @@ window.addEventListener("message", function(e) {
 			e.source.postMessage({'type':'getAccountsList', 'status': bucket['accounts']['list'][0]}, e.origin);
 		});
 
-	} else if (data.method && (data.method === "getWalletAddress")) {
+	} else if (data.method && (data.method === "getDefaultWallet")) {
 		chrome.storage.local.get('allowedsite', function(bucket) {
 			var address = "";
 			if (bucket.allowedsite) {
 				var allowedsite = Object.keys(bucket['allowedsite']).length;
 				for (var i = 0; allowedsite > i; i++) {
 					if (bucket['allowedsite'][i]['domain'] === targetOrgin) {
-						address = bucket['allowedsite'][i]['address'];
+						var wallet = {
+							'address': address = bucket['allowedsite'][i]['address'],
+							'chain_id': address = bucket['allowedsite'][i]['chain_id']
+						}
 					}
 				}
 			}
-			e.source.postMessage({'type':data.method, 'status': true, 'result': address}, e.origin);
+			e.source.postMessage({'type':data.method, 'status': true, 'result': wallet}, e.origin);
 		});
 	}else if (data.method &&
 		(data.method === "getBalance"

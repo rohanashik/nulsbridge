@@ -37,15 +37,16 @@ $(function() {
             var accounts = Object.keys(bucket['accounts']['list']).length;
             for (var i = 0; accounts > i; i++) {
                 if (bucket.accounts['list'][i]['address'] === selectedAccount){
+                    var chain_id = bucket.accounts['list'][i]['chain_id']
                     var privatekey = nuls.decrypteOfAES(bucket.accounts['list'][i]['encryptedPrivateKey'], invoking_pass);
-                    var account = nuls.importByKey(2, privatekey, invoking_pass, "");
+                    var account = nuls.importByKey(chain_id, privatekey, invoking_pass, "");
                     if (account.address === selectedAccount) {
                         console.log("Success");
                         $('#view_invoke_home').hide();
                         // var invokable = {'url': document.getElementById("invokingDomain").value, 'status': true};
                         chrome.storage.local.set({'invokable': {}});
                         chrome.runtime.getBackgroundPage(function(bgWindow) {
-                            bgWindow.allowsite(document.getElementById("invokingDomain").value, selectedAccount);
+                            bgWindow.allowsite(document.getElementById("invokingDomain").value, selectedAccount, chain_id);
                         });
                         $('#view_invoke_success').show();
                     }else{

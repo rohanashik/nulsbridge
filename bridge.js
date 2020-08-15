@@ -4,7 +4,7 @@ class bridgeConnect {
         return new Promise((resolve, reject) =>{
             this.sendData("isConnected", "", function (responsedata) {
                 if (responsedata.type === "isConnected") {
-                    console.log(responsedata.result);
+                    // console.log(responsedata.result);
                     resolve(responsedata.result);
                 }
             });
@@ -35,10 +35,10 @@ class bridgeConnect {
         });
     }
 
-    getWalletAddress() {
+    getDefaultWallet() {
         return new Promise((resolve, reject) => {
-            this.sendData("getWalletAddress", "", function (responsedata) {
-                if (responsedata.type === "getWalletAddress") {
+            this.sendData("getDefaultWallet", "", function (responsedata) {
+                if (responsedata.type === "getDefaultWallet") {
                     // console.log(JSON.stringify(responsedata));
                     resolve(responsedata.result);
                 }
@@ -58,9 +58,9 @@ class bridgeConnect {
     }
 
 
-    getBalance(address) {
+    getBalance(address, chainid, assetchainid) {
         return new Promise((resolve, reject) => {
-            this.sendData("getBalance", address, function (responsedata) {
+            this.sendData("getBalance", {address: address, chainid: chainid, assetchainid: assetchainid}, function (responsedata) {
                 if (responsedata.type === "getBalance") {
                     // console.log(JSON.stringify(responsedata));
                     resolve(responsedata.result.result);
@@ -69,9 +69,9 @@ class bridgeConnect {
         })
     }
 
-    getTokenBalance(address, contractAddress) {
+    getTokenBalance(address, chainid, contractAddress) {
         return new Promise((resolve, reject) => {
-            this.sendData("getTokenBalance", {address: address, contract: contractAddress}, function (responsedata) {
+            this.sendData("getTokenBalance", {address: address, chainid: chainid, contract: contractAddress}, function (responsedata) {
                 if (responsedata.type === "getTokenBalance") {
                     // console.log(JSON.stringify(responsedata));
                     resolve(responsedata.result.result);

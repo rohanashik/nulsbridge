@@ -7,15 +7,6 @@ console.log(
 	'background:transparent'
 );
 
-// const nuls = window.nulsjs('nuls-sdk-js');
-
-// var arrinfo = nuls.newAddress(2, "", "");
-// console.log(arrinfo);
-
-var baseurl = "http://beta.api.nuls.io";
-var clienturl = "http://beta.api.nuls.io/jsonrpc";
-var publicurl = 'http://beta.public1.nuls.io/jsonrpc';
-
 
 chrome.runtime.onMessage.addListener(function(request) {
 	if (request.type === 'requestAccess' || request.type === 'switchAccount') {
@@ -30,9 +21,10 @@ chrome.runtime.onMessage.addListener(function(request) {
 	}
 });
 
-function allowsite(domain, address) {
+function allowsite(domain, address, chain_id) {
 	var newsite = {
 		'domain': domain,
+		'chain_id': chain_id,
 		'address': address
 	};
 	chrome.storage.local.get('allowedsite', function(bucket){
@@ -67,21 +59,20 @@ function portConnected(port){
 			console.log("In background script, received message from content script");
 			console.log(JSON.stringify(m));
 			if(m.type === 'getBalance'){
-				let output = await getAccountBalance(2, 2, 1, m.data);
+				let output = await getAccountBalance(m.data.chainid, m.data.assetchainid, 1, m.data.address);
 				port.postMessage({type: "getBalance", data: output});
 			}else if(m.type === 'getTokenBalance'){
-				//TODO CHAINID
-				let output = await getTokenBalance(2, m.data.address, m.data.contract);
+				let output = await getTokenBalance(m.data.chainid, m.data.address, m.data.contract);
 				port.postMessage({type: m.type, data: output});
 			}else if(m.type === 'contractCall'){
-				if(hasAllProperties(m.data,["contractAddress", "methodName", "args"])) {
-					let output = await getInvokeContract(m.data.contractAddress, m.data.methodName, m.data.args);
+				if(hasAllProperties(m.data,["chainid", "contractAddress", "methodName", "args"])) {
+					let output = await getInvokeContract(m.data.chainid, m.data.contractAddress, m.data.methodName, m.data.args);
 					port.postMessage({type: m.type, status: true, data: output});
 				}else{
 					port.postMessage({type: m.type, status: true, data: "Invalid Inputs"});
 				}
 			}else if(m.type === 'contractWrite'){
-				if(hasAllProperties(m.data,["contractAddress", "methodName", "value", "args", "sender"])) {
+				if(hasAllProperties(m.data,["chainid", "contractAddress", "methodName", "value", "args", "sender"])) {
 					chrome.tabs.create({
 						url: chrome.extension.getURL('/activities/transaction.html'),
 						active: false
