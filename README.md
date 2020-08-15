@@ -22,7 +22,6 @@
 > <p align="center">NULS Bridge is Browser extension that supports NULS Blockchain and this extension is for NULS enabled distributed application or Dapps in your browser! The Extension injects NULS API into every website's javascript context, so that dapps can read from the blockchain.</p>
 
 
-
 ### Features
 
 - Account Management
@@ -133,7 +132,7 @@ output = await bridge.contractCall(callargs);
 
 Contributions, issues and feature requests are welcome!<br />Feel free to check [issues page](https://github.com/rohanashik/nulsbridge/issues). You can also take a look at the [contributing guide](https://github.com/rohanashik/nulsbridge/blob/master/CONTRIBUTION.md).
 
-## Show your support
+## 👏 Show your support
 
 Give a ⭐ if this project helped you!
 
