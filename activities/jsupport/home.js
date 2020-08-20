@@ -189,15 +189,17 @@ $(function() {
         navigator.clipboard.writeText(copyText)
             .then(() => {
                 var tooltip = document.getElementById("myTooltip");
-                tooltip.innerHTML = chrome.i18n.getMessage("Copied");
+                tooltip.innerHTML = chrome.i18n.getMessage("copied");
             })
             .catch(err => {
                 var tooltip = document.getElementById("myTooltip");
-                tooltip.innerHTML = chrome.i18n.getMessage("Permission Denied");
+                tooltip.innerHTML = chrome.i18n.getMessage("permissionDenied");
             });
     });
     $("#copyAddress").mouseout(function() {
-        document.getElementById("myTooltip").innerHTML = chrome.i18n.getMessage("Copy Address");
+        var message = chrome.i18n.getMessage("copyAddress");
+        console.log("Mouse Out "+message);
+        document.getElementById("myTooltip").innerHTML = message;
     });
 
 

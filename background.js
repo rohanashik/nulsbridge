@@ -1,4 +1,6 @@
-var version = "0.10 Beta";
+var manifestData = chrome.runtime.getManifest();
+
+var version = manifestData.version;
 
 console.log(
 	`%c NULS Bridge %c Background v${version} %c`,
@@ -14,7 +16,7 @@ chrome.runtime.onMessage.addListener(function(request) {
 			var invokable = {'url': request.url, 'type': request.type, 'status': false};
 			chrome.storage.local.set({'invokable': invokable});
 			chrome.windows.create({
-				tabId: tab.id, type: 'popup', focused: true,
+				tabId: tab.id, type: 'popup',
 				height: 500, width: 330, left: (screen.width / 4) + (screen.width / 2), top: 70
 			});
 		});
@@ -48,7 +50,7 @@ function allowsite(domain, address, chain_id) {
 }
 
 chrome.storage.onChanged.addListener(function(changes, namespace) {
-	console.log("Changes Detected --> "+JSON.stringify(changes));
+	// console.log("Changes Detected --> "+JSON.stringify(changes));
 });
 
 chrome.runtime.onConnect.addListener(portConnected);
@@ -56,8 +58,8 @@ chrome.runtime.onConnect.addListener(portConnected);
 function portConnected(port){
 	if(port.name === 'bridge_channel') {
 		port.onMessage.addListener(async function (m) {
-			console.log("In background script, received message from content script");
-			console.log(JSON.stringify(m));
+			// console.log("In background script, received message from content script");
+			// console.log(JSON.stringify(m));
 			if(m.type === 'getBalance'){
 				let output = await getAccountBalance(m.data.chainid, m.data.assetchainid, 1, m.data.address);
 				port.postMessage({type: "getBalance", data: output});
@@ -80,7 +82,7 @@ function portConnected(port){
 						var txwaitroom = {'url': m.orgin, 'data': m.data, 'success': false, 'task': false};
 						chrome.storage.local.set({'txwaitroom': txwaitroom});
 						chrome.windows.create({
-							tabId: tab.id, type: 'popup', focused: true,
+							tabId: tab.id, type: 'popup',
 							height: 520, width: 330, left: (screen.width / 4) + (screen.width / 2), top: 70
 						});
 					});

@@ -10,14 +10,22 @@ console.log(
 );
 
 var targetOrgin = location.origin;
+
 function injectScript(file, node) {
-	var th = document.getElementsByTagName(node)[0];
-	var s = document.createElement('script');
-	s.setAttribute('type', 'text/javascript');
-	s.setAttribute('src', file);
-	th.appendChild(s);
+	try {
+		const container = document.head || document.documentElement
+		const scriptTag = document.createElement('script')
+		scriptTag.setAttribute('async', 'false')
+		scriptTag.setAttribute('src', file);
+		container.insertBefore(scriptTag, container.children[0])
+		container.removeChild(scriptTag)
+	} catch (e) {
+		console.error('NULS Bridge provider injection failed.', e)
+	}
 }
+
 injectScript(chrome.extension.getURL('bridge.js'), 'body');
+
 
 var port_bridge = chrome.runtime.connect({name:"bridge_channel"});
 
@@ -53,8 +61,8 @@ window.addEventListener("message", function(e) {
 				allowedsitelist = changes.allowedsite.newValue;
 				for (var i = 0; Object.keys(allowedsitelist).length > i; i++) {
 					if (allowedsitelist[i]['domain'] === targetOrgin) {
-						console.log("Founded at ->" + i);
-						console.log("Switch Success!");
+						// console.log("Founded at ->" + i);
+						// console.log("Switch Success!");
 						e.source.postMessage({
 							'type': data.method,
 							'status': true,
@@ -70,7 +78,7 @@ window.addEventListener("message", function(e) {
 				var result_code = "not_available";
 				allowedsitelist = bucket.allowedsite;
 				var allowedsites = Object.keys(allowedsitelist).length;
-				console.log("Allowedsites --> "+allowedsites);
+				// console.log("Allowedsites --> "+allowedsites);
 				for(var i = 0; allowedsites > i; i++) {
 					if (allowedsitelist[i]['domain'] === targetOrgin) {
 						allowedsitelist.splice(i, 1);
@@ -141,8 +149,8 @@ chrome.storage.onChanged.addListener(function(changes, namespace) {
 		allowedsitelist = changes.allowedsite.newValue;
 		for (let i = 0; Object.keys(allowedsitelist).length > i; i++) {
 			if (allowedsitelist[i]['domain'] === targetOrgin) {
-				console.log("Founded at ->" + i);
-				console.log("Invoke Success!");
+				// console.log("Founded at ->" + i);
+				// console.log("Invoke Success!");
 				window.postMessage({
 					'type': 'Authorization',
 					'status': true,
@@ -154,7 +162,7 @@ chrome.storage.onChanged.addListener(function(changes, namespace) {
 	}else if(changes.txwaitroom && changes.txwaitroom.newValue) {
 		txwaitroom = changes.txwaitroom.newValue;
 		if (txwaitroom['task']) {
-			console.log("Transaction Success!");
+			// console.log("Transaction Success!");
 			window.postMessage({
 				'type': 'contractWrite',
 				'status': true,

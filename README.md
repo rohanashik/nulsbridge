@@ -4,7 +4,7 @@
 
 <h1 align="center">Welcome to NULS Bridge Browser Plugin 👋</h1>
 <p align="center">
-  <img alt="Version" src="https://img.shields.io/badge/version-0.4.2-blue.svg?cacheSeconds=2592000" />
+  <img alt="Version" src="https://img.shields.io/badge/version-0.4.3-blue.svg?cacheSeconds=2592000" />
   <a href="https://github.com/rohanashik/nulsbridge#readme" target="_blank">
     <img alt="Documentation" src="https://img.shields.io/badge/documentation-yes-brightgreen.svg" />
   </a>
@@ -122,11 +122,11 @@ output = await bridge.contractCall(callargs);
 
 **Rohan Ashik**
 
-* Website: rohanashik.co
+* Website: www.rohanashik.co
 * Twitter: [@Rohanashik](https://twitter.com/Rohanashik)
 * GitHub: [@rohanashik](https://github.com/rohanashik)
 * LinkedIn: [@rohanashik](https://linkedin.com/in/rohanashik)
-* Telegram: [http://t.me/rohanashik](http://t.me/rohanashik)
+* Telegram: [https://t.me/rohanashik](https://t.me/rohanashik)
 
 ## 🤝 Contributing
 
@@ -143,4 +143,4 @@ NULSd6HgTwme2QGaSuJM75XpzfHm5ju33ZCuc
 ## 📝 License
 
 Copyright © 2020 [Rohan Ashik](https://github.com/rohanashik).<br />
-This project is [MIT](https://github.com/rohanashik/nulsbridge/LICENCE) licensed.
+This project is [MIT](https://github.com/rohanashik/nulsbridge/blob/master/LICENSE) licensed.

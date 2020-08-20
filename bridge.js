@@ -1,4 +1,9 @@
+
 class bridgeConnect {
+
+    constructor(){
+        console.log("Bridge Injucted")
+    }
 
     isConnected() {
         return new Promise((resolve, reject) =>{

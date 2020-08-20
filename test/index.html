@@ -8,8 +8,8 @@
         <body onload="myFunction()">
             <p>This page is for NULS Bridge test</p>
 
-			
-			<script>
+
+			<script type="text/javascript">
 
                 async function myFunction() {
 
@@ -18,8 +18,8 @@
 
                         // console.log(await bridge.isConnected());
                         if(!await bridge.isConnected()) {
-                            console.log("Authorization ---> "+await bridge.enable());
                             console.log("Invoking Connection to Bridge");
+                            console.log("Authorization ---> "+await bridge.enable());
                         }
 
                         // await bridge.switchAccount();
@@ -33,7 +33,7 @@
                         //
                         var coinbalance =
                             await bridge.getBalance(address="tNULSeBaMhmHrnX4XJHbZxR4ypRun52s1uYnJB", chainid=2, assetChainId=2);
-                        var tokenbalance = await bridge.getTokenBalance(wallet.address, wallet.chain_id, "tNULSeBaNBWvMJc6RxtwabsDux3mgPjEKtb3Lm");
+                        var tokenbalance = await bridge.getTokenBalance("tNULSeBaMhmHrnX4XJHbZxR4ypRun52s1uYnJB", 2, "tNULSeBaNBWvMJc6RxtwabsDux3mgPjEKtb3Lm");
                         console.log("TokenBalance - " + JSON.stringify(tokenbalance));
                         console.log("CoinBalance - " + JSON.stringify(coinbalance));
 
@@ -66,8 +66,8 @@
                 }
 
 			</script>
-			
-			
-			
+
+
         </body>
+
     </html>
