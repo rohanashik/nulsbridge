@@ -9,7 +9,7 @@ $(function() {
     //     });
     // }
 
-    chrome.storage.local.get('current', function(bucket) {
+    chrome.storage.local.get('current', async function(bucket) {
         if(bucket.current) {
             var current = bucket.current;
             document.getElementById("crnt_acc_address").innerText = addresstrim(current['address']);
@@ -17,11 +17,12 @@ $(function() {
             if(current['totalBalance']) {
                 document.getElementById("coinbalance").innerText = (current['totalBalance'] / 100000000).toFixed(3);
             }
-            initiatplugin(current);
+            loadOtherAssets(current);
+            await updateFromBlockchain(current);
         }
     });
 
-    async function initiatplugin(current) {
+    async function updateFromBlockchain(current) {
         var balanceresult = await chrome.extension.getBackgroundPage().getAccountBalance(current['chain_id'], current['chain_id'], 1, current['address']);
         console.log(balanceresult)
         var balance = balanceresult.result.totalBalance;
@@ -31,46 +32,30 @@ $(function() {
 
         var tokenresult = await chrome.extension.getBackgroundPage().getTokensList(current['chain_id'], current['address']);
         var crossresult = await chrome.extension.getBackgroundPage().getCrossAssetsList(current['chain_id'], current['address']);
-        // console.log("Cross Assets ---> "+JSON.stringify(crossresult));
-        console.log("Token Assets ---> "+JSON.stringify(tokenresult));
 
-        document.getElementById("loader_token").style.display = "none";
-        document.getElementById("loader_crosschain").style.display = "none";
-        currentTokens = [];
-        currentCross = [];
+        currentTokens = {'address': current['address'], 'list':[]};
+        currentCross = {'address': current['address'], 'list':[]};
         var tokenslength = Object.keys(tokenresult['result']['list']).length;
         var crosslength = Object.keys(crossresult['result']).length;
 
-        // console.log("Tokens ---> "+JSON.stringify(crossresult));
-        // console.log("Total Tokens ---> "+tokenslength);
-        // console.log("Total Cross Assets ---> "+crosslength);
         if (tokenslength > 0) {
             for (var i = 0; tokenslength > i; i++) {
-                if(tokenresult['result']['list'][i]['status'] !== 3) {
-                    currentTokens.push({
+                if (tokenresult['result']['list'][i]['status'] !== 3) {
+                    currentTokens['list'].push({
                         'name': tokenresult['result']['list'][i]['tokenName'],
                         'symbol': tokenresult['result']['list'][i]['tokenSymbol'],
                         'contractAddress': tokenresult['result']['list'][i]['contractAddress'],
                         'balance': tokenresult['result']['list'][i]['balance'],
                         'decimals': tokenresult['result']['list'][i]['decimals'],
+                        'status': tokenresult['result']['list'][i]['status'],
                     });
-                    document.getElementById("tokenslist").innerHTML +=
-                        '<table class="token_list" width="100%" cellpadding="10">' +
-                        '<tr>' +
-                        '<td>' + tokenresult['result']['list'][i]['tokenName'] + '</td>' +
-                        '<td class="align-right">' + tokenresult['result']['list'][i]['balance'] / decimalConvertor(tokenresult['result']['list'][i]['decimals']) + '</td>' +
-                        '<td width="1%"><img src="/assets/extend.png" class="btn_ico" width="7px"></td>' +
-                        '</tr>' +
-                        '</table>';
                 }
             }
-        } else {
-            document.getElementById("tokenslist").innerHTML = '<p class="phead op5">No Tokens Available</p>'
         }
 
         if (crosslength > 0) {
             for (var j = 0; crosslength > j; j++) {
-                currentCross.push({
+                currentCross['list'].push({
                     'assetKey': crossresult['result'][j]['assetKey'],
                     'chainId': crossresult['result'][j]['chainId'],
                     'assetId': crossresult['result'][j]['assetId'],
@@ -78,24 +63,70 @@ $(function() {
                     'balance': crossresult['result'][j]['balance'],
                     'decimals': crossresult['result'][j]['decimals'],
                 });
-                document.getElementById("crosschainlist").innerHTML +=
-                    '<table class="token_list" width="100%" cellpadding="10">' +
-                    '<tr>' +
-                    '<td>' + crossresult['result'][j]['symbol'] + '</td>' +
-                    '<td class="align-right">' + crossresult['result'][j]['balance'] / decimalConvertor(crossresult['result'][j]['decimals']) + '</td>' +
-                    '<td width="1%"><img src="/assets/extend.png" class="btn_ico" width="7px"></td>' +
-                    '</tr>' +
-                    '</table>';
             }
-        } else {
-            document.getElementById("crosschainlist").innerHTML = '<p class="phead op5">No Cross Assets Available</p>'
         }
-
-        console.log(currentTokens);
         chrome.storage.local.set({'current_tokens': currentTokens});
-
-        console.log(currentCross);
         chrome.storage.local.set({'current_cross': currentCross});
+        loadOtherAssets(current);
+    }
+
+    function loadOtherAssets(current) {
+
+        chrome.storage.local.get('current_tokens', function (bucket) {
+            if (bucket.current_tokens) {
+                if (current['address'] === bucket.current_tokens['address']) {
+                    $("#loader_token").hide();
+                    var tokenslist = bucket.current_tokens;
+                    var tokenslength = Object.keys(tokenslist['list']).length;
+                    document.getElementById("tokenslist").innerHTML = "";
+
+                    if (tokenslength > 0) {
+                        for (var i = 0; tokenslength > i; i++) {
+                            if (tokenslist['list'][i]['status'] !== 3) {
+                                document.getElementById("tokenslist").innerHTML +=
+                                    '<table class="token_list asset_send pointer" cellpadding="10" id="' + tokenslist['list'][i]['symbol'] + '">' +
+                                    '<tr>' +
+                                    '<td>' + tokenslist['list'][i]['symbol'] + '</td>' +
+                                    '<td class="align-right">' + tokenslist['list'][i]['balance'] / decimalConvertor(tokenslist['list'][i]['decimals']) + '</td>' +
+                                    '<td width="1%">' +
+                                    '<img src="/assets/extend.png" class="btn_ico" width="7px"></td>' +
+                                    '</tr>' +
+                                    '</table>';
+                            }
+                        }
+                    } else {
+                        document.getElementById("tokenslist").innerHTML = '<p class="phead op5">No Tokens Available</p>'
+                    }
+                }
+            }
+        })
+
+        chrome.storage.local.get('current_cross', function (bucket) {
+            if (bucket.current_cross) {
+                if (current['address'] === bucket.current_cross['address']) {
+                    $("#loader_crosschain").hide();
+                    var crosslist = bucket.current_cross;
+                    var crosslength = Object.keys(crosslist['list']).length;
+                    document.getElementById("crosschainlist").innerHTML = "";
+
+                    if (crosslength > 0) {
+                        for (var j = 0; crosslength > j; j++) {
+                            document.getElementById("crosschainlist").innerHTML +=
+                                '<table class="token_list asset_send pointer" cellpadding="10" id="' + crosslist['list'][j]['symbol'] + '">' +
+                                '<tr>' +
+                                '<td>' + crosslist['list'][j]['symbol'] + '</td>' +
+                                '<td class="align-right">' + crosslist['list'][j]['balance'] / decimalConvertor(crosslist['list'][j]['decimals']) + '</td>' +
+                                '<td width="1%">' +
+                                '<img src="/assets/extend.png" class="btn_ico" width="7px"></td>' +
+                                '</tr>' +
+                                '</table>';
+                        }
+                    } else {
+                        document.getElementById("crosschainlist").innerHTML = '<p class="phead op5">No Cross Assets Available</p>'
+                    }
+                }
+            }
+        })
 
     }
 
@@ -123,8 +154,6 @@ $(function() {
     });
 
 
-
-
     $(window).click(function (e) {
         if (e.target.matches('.navmenu')) {
             if(e.target.id === 'acc_manage'){
@@ -148,6 +177,13 @@ $(function() {
                     }
                 });
             }
+        // } else if (e.target.closest('.asset_send')) {
+        //     // console.log("Asset Selected for sending");
+        //     // console.log(e.target.id);
+        //     var pagedata = {'request_code': "sendasset", 'data': e.target.id};
+        //     chrome.storage.local.set({'pagedata': pagedata});
+        //     window.location.href = "/activities/send.html";
+
         } else if (!e.target.matches('.dropbtn')) {
             var dropdowns = document.getElementsByClassName("dropdown-content");
             for (var i = 0; i < dropdowns.length; i++) {
@@ -159,6 +195,12 @@ $(function() {
         }
     });
 
+    $("#assets_container").on('click', '.asset_send', function () {
+        // console.log(this.id);
+        var pagedata = {'request_code': "sendasset", 'data': this.id};
+        chrome.storage.local.set({'pagedata': pagedata});
+        window.location.href = "/activities/send.html";
+    });
 
     $('.assetsview').click(function() {
         console.log(this.id);

@@ -162,15 +162,16 @@ div.crosschain_view{
 table.token_list{
 	/*border: 1px SOLID #7DB43D;*/
 	border-radius:20px;
+	/*cursor: pointer;*/
 	font-size:10px;
 	font-family: 'Poppins', sans-serif;
 	font-weight:400;
 	color:#8A8A8A;
+	width: 100%;
 	padding:0px 0px 0px 5px;
 	margin-bottom:15px;
 	box-shadow: 0 0px 1px 1px rgba(0, 0, 0, .20);
 }
-
 table.token_list:hover{
 	box-shadow: 0 0px 1px 1px #7DB43D;
 }
@@ -379,3 +380,49 @@ p.settings_head{
 	right: 0px;
 }
 /* SWITCH */
+
+
+
+/* POPUP DIALOGE */
+
+/* The Modal (background) */
+.modal {
+	display: none; /* Hidden by default */
+	position: fixed; /* Stay in place */
+	z-index: 1; /* Sit on top */
+	padding-top: 100px; /* Location of the box */
+	left: 0;
+	top: 0;
+	width: 100%; /* Full width */
+	height: 100%; /* Full height */
+	overflow: auto; /* Enable scroll if needed */
+	background-color: rgb(0,0,0); /* Fallback color */
+	background-color: rgba(0,0,0,0.4); /* Black w/ opacity */
+}
+
+/* Modal Content */
+.modal-content {
+	background-color: #fefefe;
+	margin: auto;
+	padding: 20px;
+	border-radius: 5px;
+	border: 1px solid #888;
+	width: 70%;
+	text-align: center;
+}
+
+/* The Close Button */
+.close {
+	color: #aaaaaa;
+	float: right;
+	font-size: 28px;
+	font-weight: bold;
+}
+
+.close:hover,
+.close:focus {
+	color: #000;
+	text-decoration: none;
+	cursor: pointer;
+}
+/* POPUP DIALOGE */

@@ -1,49 +1,6 @@
 $(function(){
 
-	// chrome.storage.local.get('accounts', function(bucket){
-	// 	console.log(bucket.accounts);
-	// });
-
 	const nuls = window.nulsjs('nuls-sdk-js');
-	// console.log(getchromevault('master'));
-	// MENU ACTION
-
-	$("#showAccounts").click(function(){
-		console.log("clicked");
-		$("#myDropdown").toggleClass("show");
-	});
-
-	$(window).click(function(e) {
-		if (!e.target.matches('.dropbtn')) {
-			var dropdowns = document.getElementsByClassName("dropdown-content");
-			for (var i = 0; i < dropdowns.length; i++) {
-				var openDropdown = dropdowns[i];
-				if (openDropdown.classList.contains('show')) {
-					openDropdown.classList.remove('show');
-				}
-			}
-		}
-	});
-	// MENU ACTION
-
-	$('#load').click(function(){
-
-		alert("jhjgv");
-		console.log("Task Start");
-
-		const nuls = window.nulsjs('nuls-sdk-js');
-
-		var newAddress = nuls.newAddress(2, "kjdns", "");
-		console.log(newAddress);
-
-		console.log("Task Done");
-
-		chrome.storage.local.get('master', function(bucket){
-			chrome.storage.local.set({'master': "Rohan Ashik"});
-			$('#loader').text(bucket.master);
-			console.log("Task Done");
-		})
-	 });
 
 
 	// GETTING STARTED
@@ -82,9 +39,7 @@ $(function(){
 		}else if(import_newpass === import_confirmpass && validatePassword(import_confirmpass)){
 			document.getElementById("mainlogo").src = "/assets/loader.gif";
 			var chainid = 2;
-			if(network){
-				chainid = 1;
-			}
+			if(network){chainid = 1;}
 			var importaddress = nuls.importByKey(chainid, import_pri, import_confirmpass, "");
 			var account = {
 				'address': importaddress.address,
@@ -93,18 +48,33 @@ $(function(){
 				'chain_id': chainid
 			};
 			chrome.storage.local.get('accounts', function(bucket){
+				var existAccount = false;
 				var accounts = "";
 				if(bucket.accounts){
 					accounts = bucket.accounts;
+					var accountslen = Object.keys(bucket['accounts']['list']).length;
+					for (var i = 0; accountslen > i; i++) {
+						if (bucket.accounts['list'][i]['address'] === account.address) {
+							existAccount = true;
+						}
+					}
 				}else{
 					accounts = {"list":[]};
 				}
-				accounts['list'].push(account);
-				chrome.storage.local.set({'accounts': accounts});
-				chrome.storage.local.set({'current': account});
-				chrome.storage.local.set({'loggedin': true}, function () {
-					window.location.href = "/activities/index.html";
-				});
+				if (!existAccount) {
+					accounts['list'].push(account);
+					chrome.storage.local.set({'accounts': accounts});
+					chrome.storage.local.set({'current': account});
+					chrome.storage.local.set({'loggedin': true}, function () {
+						window.location.href = "/activities/index.html";
+					});
+				} else {
+					error.style.display = "block";
+					error_msg.innerText = "Account Already Exists!";
+					document.getElementById("mainlogo").src = "/assets/nuls.png";
+				}
+
+
 			});
 		}
 	});

@@ -43,13 +43,14 @@ $(function() {
                if (cbucket.current) {
                    var current = cbucket.current;
                    var privatekey = nuls.decrypteOfAES(current.encryptedPrivateKey, change_current);
-                   var account = nuls.importByKey(2, privatekey, change_confirm, "");
+                   var account = nuls.importByKey(current.chain_id, privatekey, change_confirm, "");
                    if (account.address === current.address) {
                        console.log("Matched");
                        var updatedaccount = {
                            'address': account.address,
                            'encryptedPrivateKey': account.aesPri,
-                           'pubKey': account.pub
+                           'pubKey': account.pub,
+                           'chain_id': current.chain_id
                        };
                        chrome.storage.local.set({'current': updatedaccount});
                        chrome.storage.local.get('accounts', function(bucket){
@@ -91,7 +92,7 @@ $(function() {
             if(cbucket.current) {
                 var current = cbucket.current;
                 var privatekey = nuls.decrypteOfAES(current.encryptedPrivateKey, edwlt_pass);
-                var account = nuls.importByKey(2, privatekey, "", "");
+                var account = nuls.importByKey(current.chain_id, privatekey, "", "");
 
                 if(account.address === current.address){
                     console.log("Matched");
@@ -109,7 +110,7 @@ $(function() {
                                     // delete accountslist['list'][i];
                                     accountslist['list'].splice(i, 1);
                                     chrome.storage.local.set({'accounts': accountslist}, function(bucket){
-                                        window.location.href = '/index.html';
+                                        window.location.href = '/activities/index.html';
                                     });
                                     break;
                                 }
@@ -135,5 +136,7 @@ $(function() {
         downloadAnchorNode.click();
         downloadAnchorNode.remove();
     }
+
+
 
 });

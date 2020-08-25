@@ -3,6 +3,19 @@ $(function() {
     var dropdown = document.getElementById('assetlist');
     const nuls = window.nulsjs('nuls-sdk-js');
     var chain_id = 2;
+    var defaultasset = "NULS";
+
+
+    // var pagedata = {'request_code': "sendasset", 'data': e.target.id};
+    // chrome.storage.local.set({'pagedata': pagedata});
+
+    chrome.storage.local.get('pagedata', function(bucket) {
+        if(bucket.pagedata) {
+            if(bucket.pagedata['request_code'] === 'sendasset')
+                defaultasset = bucket.pagedata['data'];
+        }
+    });
+
 
     chrome.storage.local.get('current', function(bucket) {
         if(bucket.current) {
@@ -30,36 +43,42 @@ $(function() {
     });
 
     chrome.storage.local.get('current_tokens', function(bucket) {
-        var tokens = Object.keys(bucket['current_tokens']).length;
-        for(var i=0; tokens > i; i++){
-            var symbol = bucket.current_tokens[i]['symbol'];
-            var contractAddress = bucket.current_tokens[i]['contractAddress'];
-            var dcplace = bucket.current_tokens[i]['decimals'];
-            var decimals = decimalConvertor(dcplace);
-            var balance = bucket.current_tokens[i]['balance']/decimals;
-            dropdown.innerHTML += '<option value="'+contractAddress+'" data-assetschainid="'+chain_id+'" data-dcplace="'+dcplace+'" data-decimals="'+decimals+'" data-type="token" data-balance="'+balance+'">'+symbol+'</option>';
+        if (bucket['current_tokens']) {
+            var tokens = Object.keys(bucket['current_tokens']['list']).length;
+            for (var i = 0; tokens > i; i++) {
+                var symbol = bucket.current_tokens['list'][i]['symbol'];
+                var contractAddress = bucket.current_tokens['list'][i]['contractAddress'];
+                var dcplace = bucket.current_tokens['list'][i]['decimals'];
+                var decimals = decimalConvertor(dcplace);
+                var balance = bucket.current_tokens['list'][i]['balance'] / decimals;
+                let flagit = "";
+                if (defaultasset === symbol)
+                    flagit = "selected";
+                dropdown.innerHTML += '<option value="' + contractAddress + '" data-assetschainid="' + chain_id + '" data-dcplace="' + dcplace + '" data-decimals="' + decimals + '" data-type="token" data-balance="' + balance + '" ' + flagit + '>' + symbol + '</option>';
+            }
         }
     });
 
     chrome.storage.local.get('current_cross', function(bucket) {
-        var crossassets = Object.keys(bucket['current_cross']).length;
-        for(var i=0; crossassets > i; i++){
-            var symbol = bucket.current_cross[i]['symbol'];
-            var chainId = bucket.current_cross[i]['chainId'];
-            var dcplace = bucket.current_cross[i]['decimals'];
-            var decimals = decimalConvertor(dcplace);
-            var balance = bucket.current_cross[i]['balance']/decimals;
-            dropdown.innerHTML += '<option value="2" data-assetschainid="'+chainId+'" data-dcplace="'+dcplace+'" data-decimals="'+decimals+'" data-type="coin" data-balance="'+balance+'">'+symbol+'</option>';
+        if (bucket['current_cross']) {
+            var crossassets = Object.keys(bucket['current_cross']['list']).length;
+            for (var i = 0; crossassets > i; i++) {
+                var symbol = bucket.current_cross['list'][i]['symbol'];
+                var chainId = bucket.current_cross['list'][i]['chainId'];
+                var dcplace = bucket.current_cross['list'][i]['decimals'];
+                var decimals = decimalConvertor(dcplace);
+                var balance = bucket.current_cross['list'][i]['balance'] / decimals;
+                let flagit = "";
+                if (defaultasset === symbol)
+                    flagit = "selected";
+                dropdown.innerHTML += '<option value="2" data-assetschainid="' + chainId + '" data-dcplace="' + dcplace + '" data-decimals="' + decimals + '" data-type="coin" data-balance="' + balance + '" ' + flagit + '>' + symbol + '</option>';
+            }
         }
+
+        assetSelected();
     });
 
-    $('#assetlist').on('change', function (e) {
-        var selected = $(this).find('option:selected');
-        var balance = selected.data('balance');
-        var decimals = selected.data('decimals');
-        document.getElementById("cryp_balance").value=balance;
-        document.getElementById("send_balance").innerText=balance +" "+ selected.text();
-    });
+
 
     $('#transaction_review').on('click', async function (e) {
         var receiver = document.getElementById("cryp_receiver").value;
@@ -184,6 +203,19 @@ $(function() {
 
     });
 
+    $('#assetlist').on('change', function (e) {
+       assetSelected();
+    });
+
+
+    function assetSelected() {
+
+        var selected = $('#assetlist').find('option:selected');
+        var balance = selected.data('balance');
+        var decimals = selected.data('decimals');
+        document.getElementById("cryp_balance").value=balance;
+        document.getElementById("send_balance").innerText=balance +" "+ selected.text();
+    }
 
 
 });

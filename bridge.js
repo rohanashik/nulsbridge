@@ -2,7 +2,7 @@
 class bridgeConnect {
 
     constructor(){
-        console.log("Bridge Injucted")
+        console.log("Bridge Injected")
     }
 
     isConnected() {

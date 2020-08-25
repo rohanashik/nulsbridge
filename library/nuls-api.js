@@ -89,7 +89,6 @@ async function sendTransaction(chain_id, transfertype, assetsChainId, assettype,
             type = 10;
             transactCross(chain_id, privateKey, publicKey, transferInfo, balanceInfo, type, "", "", handledata);
         }
-        // }else{
         //     CROSS COIN
         //     transferInfo = {
         //         fromAddress: fromAddress,
@@ -710,7 +709,9 @@ async function getTokensList(chainIdn, address) {
         },
         body: JSON.stringify(request)
     });
-    return await githubResponse.json();
+    response = await githubResponse.json();
+    console.log(response);
+    return response;
 }
 
 async function getCrossAssetsList(chainIdn, address) {

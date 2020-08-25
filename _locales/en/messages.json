@@ -153,6 +153,9 @@
   "checkForUpdates": {
     "message": "Check For Updates"
   },
+  "aboutTheApp": {
+    "message": "About The App"
+  },
   "sendFeedback": {
     "message": "Send Feedback"
   },

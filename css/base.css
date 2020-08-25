@@ -321,7 +321,7 @@ div.right{
     width: 30%;
 }
 .wdth60{
-    width: 60%;
+    width: 60% !important;
 }
 .wdth70{
     width: 70%;

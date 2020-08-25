@@ -151,6 +151,9 @@
   "checkForUpdates": {
     "message": "检查更新"
   },
+  "aboutTheApp": {
+    "message": "关于应用程序"
+  },
   "sendFeedback": {
     "message": "发送反馈"
   },

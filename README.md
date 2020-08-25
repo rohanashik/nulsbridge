@@ -4,7 +4,7 @@
 
 <h1 align="center">Welcome to NULS Bridge Browser Plugin 👋</h1>
 <p align="center">
-  <img alt="Version" src="https://img.shields.io/badge/version-0.4.3-blue.svg?cacheSeconds=2592000" />
+  <img alt="Version" src="https://img.shields.io/badge/version-0.4.4-blue.svg?cacheSeconds=2592000" />
   <a href="https://github.com/rohanashik/nulsbridge#readme" target="_blank">
     <img alt="Documentation" src="https://img.shields.io/badge/documentation-yes-brightgreen.svg" />
   </a>

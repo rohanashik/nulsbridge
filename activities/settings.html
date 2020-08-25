@@ -34,7 +34,7 @@
 
     <div class="settings_container" id="view_settings_container">
         <a href="/activities/management.html">
-        <div class="settings_menu">
+        <div class="settings_menu settings_menu_grp">
             <p class="left" data-localize="__MSG_walletManagement__">Wallet Management</p>
             <img class="left" src="/assets/extend.png" width="8">
         </div>
@@ -47,19 +47,24 @@
 <!--            <p class="left">Language</p>-->
 <!--            <img class="left" src="assets/extend.png" width="8">-->
 <!--        </div>-->
-        <div class="settings_menu" id="goSetConnections">
+        <div class="settings_menu settings_menu_grp" id="goSetConnections">
             <p class="left" data-localize="__MSG_siteConnections__">Site Connections</p>
             <img class="left" src="/assets/extend.png" width="8">
         </div>
-		<div class="settings_menu">
-            <p class="left" data-localize="__MSG_checkForUpdates__">Check for Updates</p>
-            <img class="left" src="/assets/extend.png" width="8">
-        </div>
-		<div class="settings_menu" id="goSetFeedback">
+
+<!--		<div class="settings_menu settings_menu_grp" id="goOpenAbout">-->
+<!--            <p class="left" data-localize="__MSG_checkForUpdates__">Check for Updates</p>-->
+<!--            <img class="left" src="/assets/extend.png" width="8">-->
+<!--        </div>-->
+		<div class="settings_menu settings_menu_grp" id="goSetFeedback">
             <p class="left" data-localize="__MSG_sendFeedback__">Send Feedback</p>
             <img class="left" src="/assets/extend.png" width="8">
         </div>
-		<div class="settings_menu" id="goSetLogout">
+        <div class="settings_menu settings_menu_grp" id="goOpenAbout">
+            <p class="left" data-localize="__MSG_aboutTheApp__">About the App</p>
+            <img class="left" src="/assets/extend.png" width="8">
+        </div>
+		<div class="settings_menu settings_menu_grp" id="goSetLogout">
             <p class="left" data-localize="__MSG_logoutAll__">Logout all</p>
             <img class="left" src="/assets/extend.png" width="8">
         </div>
@@ -81,6 +86,38 @@
     <div id="view_connections" class="hide subsettings">
 
         <div id="connectionlist"></div>
+
+    </div>
+
+    <div id="view_version" class="hide subsettings" style="padding: 30px">
+
+        <center>
+
+            <img src="/assets/nuls.png" height="100px" id="mainlogo"/>
+            <br>
+            <img class="mrgt30" src="/assets/bridge_single.png" width="74"/>
+
+            <p class="phead mrgt30 op7">NULS Bridge Designed and Build with Love with NULS Blockchain Technology</p>
+
+            <button class="greencurved wdth60 mrgt20 settings_menu_grp" id="goViewGithub">GitHub</button>
+            <p class="pheadl mrgt20" id="appversion">v0.4.3</p>
+
+        </center>
+
+    </div>
+
+
+
+
+    <div id="confirmView" class="modal">
+
+        <!-- Modal content -->
+        <div class="modal-content">
+            <p class="headbold mrgb10">Confirm Login</p>
+            <p class="phead mrg10">Please take backup of all your account in this wallet.
+                By Logging out, I confirm that all wallet will be cleared with no backups.</p>
+            <button class="greencurved wdth60 mrgt10 settings_menu_grp" id="goConfirmLogout">I'm Sure, Logout</button>
+        </div>
 
     </div>
 
