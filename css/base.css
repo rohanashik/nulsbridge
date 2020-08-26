@@ -608,7 +608,7 @@ input[type=checkbox].css-checkbox {
 	display: none;
 	position: absolute;
 	font-family: Montserrat;
-	background-color: rgba(0, 0, 0, .85);
+	background-color: rgba(0, 0, 0, .87);
 	font-size: 12px;
 	min-width: 205px;
 	padding: 7px;
@@ -645,6 +645,11 @@ input[type=checkbox].css-checkbox {
 }
 .navmenu{
 	font-size:9.5px !important;
+}
+
+.currentac{
+	border-radius: 5px;
+	background: #333;
 }
 
 .navmenu_low{

@@ -48,21 +48,30 @@ $(function() {
                        console.log("Matched");
                        var updatedaccount = {
                            'address': account.address,
+                           'chain_id': current.chain_id,
                            'encryptedPrivateKey': account.aesPri,
                            'pubKey': account.pub,
-                           'chain_id': current.chain_id
                        };
                        chrome.storage.local.set({'current': updatedaccount});
                        chrome.storage.local.get('accounts', function(bucket){
-                           accounts = bucket.accounts;
+                           accounts_list = bucket.accounts;
+                           // console.log("Before Update ---> "+JSON.stringify(accounts_list));
                            var accounts = Object.keys(bucket['accounts']['list']).length;
                            for(var i = 0; accounts > i; i++) {
                                if (bucket.accounts['list'][i]['address'] === account.address) {
-                                   bucket.accounts['list'][i] = updatedaccount;
+                                   accounts_list['list'][i] = updatedaccount;
                                }
                            }
+                           // console.log("After Update ---> "+JSON.stringify(accounts_list));
 
+                           $('#change_current').val("");
+                           $('#change_new').val("");
+                           $('#change_confirm').val("");
                            $('#change_success').show();
+
+                           chrome.storage.local.set({'accounts': accounts_list}, function (e) {
+                                window.location.href = "/activities/management.html"
+                           });
                        });
                    } else {
                        $('#change_error').show();

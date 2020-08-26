@@ -4,7 +4,7 @@
 
 <h1 align="center">Welcome to NULS Bridge Browser Plugin 👋</h1>
 <p align="center">
-  <img alt="Version" src="https://img.shields.io/badge/version-0.4.4-blue.svg?cacheSeconds=2592000" />
+  <img alt="Version" src="https://img.shields.io/badge/version-0.4.5-blue.svg?cacheSeconds=2592000" />
   <a href="https://github.com/rohanashik/nulsbridge#readme" target="_blank">
     <img alt="Documentation" src="https://img.shields.io/badge/documentation-yes-brightgreen.svg" />
   </a>
@@ -123,7 +123,7 @@ output = await bridge.contractCall(callargs);
 **Rohan Ashik**
 
 * Website: www.rohanashik.co
-* Twitter: [@Rohanashik](https://twitter.com/Rohanashik)
+* Twitter: [@rohanashik](https://twitter.com/rohanashik)
 * GitHub: [@rohanashik](https://github.com/rohanashik)
 * LinkedIn: [@rohanashik](https://linkedin.com/in/rohanashik)
 * Telegram: [https://t.me/rohanashik](https://t.me/rohanashik)
@@ -137,10 +137,12 @@ Contributions, issues and feature requests are welcome!<br />Feel free to check 
 Give a ⭐ if this project helped you!
 
 NULS Wallet Address:
-NULSd6HgTwme2QGaSuJM75XpzfHm5ju33ZCuc
+
+<img alt="Maintenance" src="https://img.shields.io/badge/NULS-NULSd6HgTwme2QGaSuJM75XpzfHm5ju33ZCuc-brightgreen?style=flat-square" />
+
 
 
 ## 📝 License
 
-Copyright © 2020 [Rohan Ashik](https://github.com/rohanashik).<br />
+Copyright © 2020 [Rohan Ashik](https://github.com/rohanashik). <br/>
 This project is [MIT](https://github.com/rohanashik/nulsbridge/blob/master/LICENSE) licensed.

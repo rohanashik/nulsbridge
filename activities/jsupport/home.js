@@ -9,6 +9,7 @@ $(function() {
     //     });
     // }
 
+
     chrome.storage.local.get('current', async function(bucket) {
         if(bucket.current) {
             var current = bucket.current;
@@ -21,6 +22,16 @@ $(function() {
             await updateFromBlockchain(current);
         }
     });
+
+    setInterval(function() {
+        chrome.storage.local.get('current', async function(bucket) {
+            if(bucket.current) {
+                var current = bucket.current;
+                await updateFromBlockchain(current);
+            }
+        });
+    }, 10000);
+
 
     async function updateFromBlockchain(current) {
         var balanceresult = await chrome.extension.getBackgroundPage().getAccountBalance(current['chain_id'], current['chain_id'], 1, current['address']);
@@ -48,6 +59,7 @@ $(function() {
                         'balance': tokenresult['result']['list'][i]['balance'],
                         'decimals': tokenresult['result']['list'][i]['decimals'],
                         'status': tokenresult['result']['list'][i]['status'],
+                        'key': generatekey(12)
                     });
                 }
             }
@@ -62,6 +74,7 @@ $(function() {
                     'symbol': crossresult['result'][j]['symbol'],
                     'balance': crossresult['result'][j]['balance'],
                     'decimals': crossresult['result'][j]['decimals'],
+                    'key': generatekey(12)
                 });
             }
         }
@@ -84,7 +97,7 @@ $(function() {
                         for (var i = 0; tokenslength > i; i++) {
                             if (tokenslist['list'][i]['status'] !== 3) {
                                 document.getElementById("tokenslist").innerHTML +=
-                                    '<table class="token_list asset_send pointer" cellpadding="10" id="' + tokenslist['list'][i]['symbol'] + '">' +
+                                    '<table class="token_list asset_send pointer" cellpadding="10" id="' + tokenslist['list'][i]['key'] + '">' +
                                     '<tr>' +
                                     '<td>' + tokenslist['list'][i]['symbol'] + '</td>' +
                                     '<td class="align-right">' + tokenslist['list'][i]['balance'] / decimalConvertor(tokenslist['list'][i]['decimals']) + '</td>' +
@@ -112,7 +125,7 @@ $(function() {
                     if (crosslength > 0) {
                         for (var j = 0; crosslength > j; j++) {
                             document.getElementById("crosschainlist").innerHTML +=
-                                '<table class="token_list asset_send pointer" cellpadding="10" id="' + crosslist['list'][j]['symbol'] + '">' +
+                                '<table class="token_list asset_send pointer" cellpadding="10" id="' + crosslist['list'][j]['key'] + '">' +
                                 '<tr>' +
                                 '<td>' + crosslist['list'][j]['symbol'] + '</td>' +
                                 '<td class="align-right">' + crosslist['list'][j]['balance'] / decimalConvertor(crosslist['list'][j]['decimals']) + '</td>' +
@@ -131,6 +144,7 @@ $(function() {
     }
 
     chrome.storage.local.get('accounts', function(bucket) {
+        var currentAddress = document.getElementById("fulladdress").value;
         var menuview_testnet = document.getElementById('menuview_testnet');
         var menuview_mainnet = document.getElementById('menuview_mainnet');
         var menuview_all = document.getElementById('menuview_all');
@@ -142,10 +156,16 @@ $(function() {
             var adrs = bucket.accounts['list'][i]['address'];
             if(bucket.accounts['list'][i]['chain_id'] === 1){
                 $('#def_main_wallet').hide();
-                menuview_mainnet.innerHTML += '<p class="navmenu" id="'+adrs+'">'+addresstrim(adrs)+'</p>';
+                let selected = ""
+                if (bucket.accounts['list'][i]['address'] === currentAddress)
+                    selected = "currentac";
+                menuview_mainnet.innerHTML += '<p class="navmenu '+selected+'" id="'+adrs+'">'+addresstrim(adrs)+'</p>';
             }else if(bucket.accounts['list'][i]['chain_id'] === 2){
                 $('#def_test_wallet').hide();
-                menuview_testnet.innerHTML += '<p class="navmenu" id="'+adrs+'">'+addresstrim(adrs)+'</p>';
+                let selected = ""
+                if (bucket.accounts['list'][i]['address'] === currentAddress)
+                    selected = "currentac";
+                menuview_testnet.innerHTML += '<p class="navmenu '+selected+'" id="'+adrs+'">'+addresstrim(adrs)+'</p>';
             }
         }
         menuview_all.innerHTML += '<p class="navmenu" id="new_acc">Create/Import Wallet</p>';
@@ -195,13 +215,6 @@ $(function() {
         }
     });
 
-    $("#assets_container").on('click', '.asset_send', function () {
-        // console.log(this.id);
-        var pagedata = {'request_code': "sendasset", 'data': this.id};
-        chrome.storage.local.set({'pagedata': pagedata});
-        window.location.href = "/activities/send.html";
-    });
-
     $('.assetsview').click(function() {
         console.log(this.id);
         if(this.id === 'crosschain'){
@@ -220,6 +233,20 @@ $(function() {
             $('#crosschain').addClass('op5');
         }
     });
+
+
+    $("#sendNuls").on('click', function () {
+        var pagedata = {'request_code': "sendasset", 'data': 'NULS'};
+        chrome.storage.local.set({'pagedata': pagedata});
+        window.location.href = "/activities/send.html";
+    });
+
+    $("#assets_container").on('click', '.asset_send', function () {
+        var pagedata = {'request_code': "sendasset", 'data': this.id};
+        chrome.storage.local.set({'pagedata': pagedata});
+        window.location.href = "/activities/send.html";
+    });
+
 
     $("#buynuls").on('click', function () {
         var url = "https://www.binance.com/en/trade/NULS_BTC";

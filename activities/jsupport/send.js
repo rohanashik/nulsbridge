@@ -46,13 +46,14 @@ $(function() {
         if (bucket['current_tokens']) {
             var tokens = Object.keys(bucket['current_tokens']['list']).length;
             for (var i = 0; tokens > i; i++) {
+                var assetkey = bucket.current_tokens['list'][i]['key'];
                 var symbol = bucket.current_tokens['list'][i]['symbol'];
                 var contractAddress = bucket.current_tokens['list'][i]['contractAddress'];
                 var dcplace = bucket.current_tokens['list'][i]['decimals'];
                 var decimals = decimalConvertor(dcplace);
                 var balance = bucket.current_tokens['list'][i]['balance'] / decimals;
                 let flagit = "";
-                if (defaultasset === symbol)
+                if (defaultasset === assetkey)
                     flagit = "selected";
                 dropdown.innerHTML += '<option value="' + contractAddress + '" data-assetschainid="' + chain_id + '" data-dcplace="' + dcplace + '" data-decimals="' + decimals + '" data-type="token" data-balance="' + balance + '" ' + flagit + '>' + symbol + '</option>';
             }
@@ -63,13 +64,14 @@ $(function() {
         if (bucket['current_cross']) {
             var crossassets = Object.keys(bucket['current_cross']['list']).length;
             for (var i = 0; crossassets > i; i++) {
+                var assetkey = bucket.current_cross['list'][i]['key'];
                 var symbol = bucket.current_cross['list'][i]['symbol'];
                 var chainId = bucket.current_cross['list'][i]['chainId'];
                 var dcplace = bucket.current_cross['list'][i]['decimals'];
                 var decimals = decimalConvertor(dcplace);
                 var balance = bucket.current_cross['list'][i]['balance'] / decimals;
                 let flagit = "";
-                if (defaultasset === symbol)
+                if (defaultasset === assetkey)
                     flagit = "selected";
                 dropdown.innerHTML += '<option value="2" data-assetschainid="' + chainId + '" data-dcplace="' + dcplace + '" data-decimals="' + decimals + '" data-type="coin" data-balance="' + balance + '" ' + flagit + '>' + symbol + '</option>';
             }
