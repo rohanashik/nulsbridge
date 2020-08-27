@@ -29,6 +29,9 @@
 - Main & Test Network Wallets
 
 
+<img alt="NULS Bridge" src="https://raw.githubusercontent.com/rohanashik/nulsbridge/master/assets/nuls-bridge-cross-browser-plugin.png" />
+
+
 ### Installation
 
 - [Get the Chrome Extension](https://github.com/rohanashik/nulsbridge)
