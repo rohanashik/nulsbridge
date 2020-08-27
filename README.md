@@ -137,9 +137,7 @@ Contributions, issues and feature requests are welcome!<br />Feel free to check 
 Give a ⭐ if this project helped you!
 
 NULS Wallet Address:
-
-<img alt="Maintenance" src="https://img.shields.io/badge/NULS-NULSd6HgTwme2QGaSuJM75XpzfHm5ju33ZCuc-brightgreen?style=flat-square" />
-
+NULSd6HgTwme2QGaSuJM75XpzfHm5ju33ZCuc
 
 
 ## 📝 License

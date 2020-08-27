@@ -8,9 +8,7 @@
         <body onload="myFunction()">
             <p>This page is for NULS Bridge test</p>
 
-
 			<script type="text/javascript">
-
                 async function myFunction() {
 
                     if (typeof window.bridge !== 'undefined') {
@@ -22,11 +20,11 @@
                             console.log("Authorization ---> "+await bridge.enable());
                         }
 
+                        // console.log("Switch Account ---> "+await bridge.switchAccount());
                         // await bridge.switchAccount();
                         var wallet = await bridge.getDefaultWallet();
                         console.log("Selected Address ---> "+ wallet.address);
                         console.log("Selected Chain ---> "+ wallet.chain_id);
-                        // console.log("Switch Account ---> "+await bridge.switchAccount());
 
                         //
                         // console.log("Connected to Bridge");
@@ -37,20 +35,29 @@
                         console.log("TokenBalance - " + JSON.stringify(tokenbalance));
                         console.log("CoinBalance - " + JSON.stringify(coinbalance));
 
+                        // var inputs = {
+                        //     "chainid": wallet.chain_id,
+                        //     "contractAddress": "tNULSeBaN2TLFuecRgASzC7KdbfjhbGD9MthHQ",
+                        //     "methodName": "issue",
+                        //     "args": ["XCVGHNJ2134"],
+                        //     "value": 0,
+                        //     "sender": wallet.address
+                        // };
+
                         var inputs = {
                             "chainid": wallet.chain_id,
-                            "contractAddress": "NULSd6HgpNK7b7UEskaUb4nT4dy2vtVasmJju",
-                            "methodName": "issue",
-                            "args": ["XCVGBHNJ1234"],
-                            "value":0,
+                            "contractAddress": "tNULSeBaN95dabebc1YJiYDfaHaUvRjSFM9TXS",
+                            "methodName": "storeVault",
+                            "args": ["Ashik"],
+                            "value": 2 * 100000000,
                             "sender": wallet.address
                         };
 
-                        // console.log("Contract Write ---> "+JSON.stringify(await bridge.contractWrite(inputs)));
+                        console.log("Contract Write ---> "+JSON.stringify(await bridge.contractWrite(inputs)));
 
                         var callargs = {
                             "chainid": wallet.chain_id,
-                            "contractAddress": "NULSd6HgpNK7b7UEskaUb4nT4dy2vtVasmJju",
+                            "contractAddress": "tNULSeBaN2TLFuecRgASzC7KdbfjhbGD9MthHQ",
                             "methodName": "isIssued",
                             "args": ["XCVGBHNJ1234"]
                         };

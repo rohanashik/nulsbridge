@@ -58,7 +58,9 @@ async function gasCalculator(chain_id, contractAddress, methodName, cvalue, send
     var gasFee = Number(gasLimit.times(CONTRACT_MINIMUM_PRICE));
 
     console.log("gasLimit - " + gasLimit.toString());
-    var newamount = Number(newValue + gasFee);
+    // var newamount = Number(newValue + gasFee);
+    var newamount = Number(parseInt(newValue) + parseInt(gasFee));
+
     console.log("value - " + value);
     console.log("newValue - " + newValue);
     console.log("amount - " + newamount);
@@ -309,7 +311,7 @@ async function callContract(privateKey, publicKey, fromAddress, assetsChainId, a
     var gasLimit = new BigNumber(contractCallTxData.gasLimit);
     console.log("gasLimit - " + gasLimit.toString());
     var gasFee = Number(gasLimit.times(contractCallTxData.price));
-    var amount = Number(newValue + gasFee);
+    var amount = Number(parseInt(newValue) + parseInt(gasFee));
     console.log("value - " + value);
     console.log("newValue - " + newValue);
     console.log("amount - " + amount);
