@@ -130,7 +130,7 @@ output = await bridge.contractCall(callargs);
 
 ## 🤝 Contributing
 
-Contributions, issues and feature requests are welcome!<br />Feel free to check [issues page](https://github.com/rohanashik/nulsbridge/issues). You can also take a look at the [contributing guide](https://github.com/rohanashik/nulsbridge/blob/master/CONTRIBUTION.md).
+Contributions, issues and feature requests are welcome!<br />Feel free to check [issues page](https://github.com/rohanashik/nulsbridge/issues). You can also take a look at the [contributing guide](https://github.com/rohanashik/nulsbridge/blob/master/CONTRIBUTING.md).
 
 ## 👏 Show your support
 
