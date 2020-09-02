@@ -8,14 +8,14 @@
   <a href="https://github.com/rohanashik/nulsbridge#readme" target="_blank">
     <img alt="Documentation" src="https://img.shields.io/badge/documentation-yes-brightgreen.svg" />
   </a>
-  <a href="https://github.com/kefranabg/readme-md-generator/graphs/commit-activity" target="_blank">
+  <a href="https://github.com/rohanashik/nulsbridge/graphs/commit-activity" target="_blank">
     <img alt="Maintenance" src="https://img.shields.io/badge/Maintained%3F-yes-green.svg" />
   </a>
   <a href="https://github.com/rohanashik/nulsbridge/blob/master/LICENSE" target="_blank">
     <img alt="License: MIT" src="https://img.shields.io/badge/license-MIT-yellow.svg" />
   </a>
   <a href="https://twitter.com/Nuls" target="_blank">
-    <img alt="Twitter: Rohanashik" src="https://img.shields.io/twitter/follow/Nuls.svg?style=social" />
+    <img alt="Twitter: NULS" src="https://img.shields.io/twitter/follow/Nuls.svg?style=social" />
   </a>
 </p>
 
@@ -25,7 +25,7 @@
 ### Features
 
 - Account Management
-- Wallet Docking with Web Dapp Applications
+- Wallet Docking with Web DApp Applications
 - Main & Test Network Wallets
 
 
@@ -116,6 +116,14 @@ var callargs = {
 
 output = await bridge.contractCall(callargs);
 // Output Contract function return value
+```
+
+
+### To Deauthenticate NULS Bridge with your Site
+
+```javascript
+output = await bridge.disable();
+// Removes Authentication to NULS Bridge
 ```
 
 

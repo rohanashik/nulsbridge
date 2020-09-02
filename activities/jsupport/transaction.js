@@ -75,6 +75,7 @@ $(function () {
                         var response = await getAccountBalance(chain_id, assetsChainId, 1, account.address);
                         var balance = response.result;
                         try {
+                            // console.log("Printing Records --> "+privatekey+" "+account.pub+" "+account.address+" "+assetsChainId+" "+contractCall+" "+balance)
                             await callContract(privatekey, account.pub, account.address, assetsChainId, 1, contractCall, balance, '', function (status, response) {
                                 console.log(response);
                                 if(status) {
